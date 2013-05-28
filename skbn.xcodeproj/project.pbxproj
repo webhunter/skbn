@@ -133,6 +133,11 @@
 		D9719B6C17511A0200C4A3C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B6B17511A0200C4A3C7 /* AppDelegate.m */; };
 		D9719B6F17511A0200C4A3C7 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B6E17511A0200C4A3C7 /* HelloWorldLayer.m */; };
 		D9719B7217511A0200C4A3C7 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B7117511A0200C4A3C7 /* IntroLayer.m */; };
+		D9C2536B1752DB0A009EF2DD /* atlas1.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C253691752DB0A009EF2DD /* atlas1.plist */; };
+		D9C2536C1752DB0A009EF2DD /* atlas1.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C2536A1752DB0A009EF2DD /* atlas1.png */; };
+		D9C2536F1752DCFD009EF2DD /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C2536E1752DCFD009EF2DD /* Player.m */; };
+		D9C253721752DE8B009EF2DD /* atlas_chara.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C253701752DE8B009EF2DD /* atlas_chara.plist */; };
+		D9C253731752DE8B009EF2DD /* atlas_chara.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C253711752DE8B009EF2DD /* atlas_chara.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -398,6 +403,13 @@
 		D9719B6E17511A0200C4A3C7 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		D9719B7017511A0200C4A3C7 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		D9719B7117511A0200C4A3C7 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
+		D9AE61F11754351C007C443C /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
+		D9C253691752DB0A009EF2DD /* atlas1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas1.plist; sourceTree = "<group>"; };
+		D9C2536A1752DB0A009EF2DD /* atlas1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas1.png; sourceTree = "<group>"; };
+		D9C2536D1752DCFD009EF2DD /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		D9C2536E1752DCFD009EF2DD /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		D9C253701752DE8B009EF2DD /* atlas_chara.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas_chara.plist; sourceTree = "<group>"; };
+		D9C253711752DE8B009EF2DD /* atlas_chara.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas_chara.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -460,6 +472,9 @@
 				D9719B6B17511A0200C4A3C7 /* AppDelegate.m */,
 				D9719B6D17511A0200C4A3C7 /* HelloWorldLayer.h */,
 				D9719B6E17511A0200C4A3C7 /* HelloWorldLayer.m */,
+				D9AE61F11754351C007C443C /* GameConfig.h */,
+				D9C2536D1752DCFD009EF2DD /* Player.h */,
+				D9C2536E1752DCFD009EF2DD /* Player.m */,
 				D9719B7017511A0200C4A3C7 /* IntroLayer.h */,
 				D9719B7117511A0200C4A3C7 /* IntroLayer.m */,
 				D97199F3175119FD00C4A3C7 /* Resources */,
@@ -472,6 +487,10 @@
 		D97199F3175119FD00C4A3C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D9C253701752DE8B009EF2DD /* atlas_chara.plist */,
+				D9C253711752DE8B009EF2DD /* atlas_chara.png */,
+				D9C253691752DB0A009EF2DD /* atlas1.plist */,
+				D9C2536A1752DB0A009EF2DD /* atlas1.png */,
 				D97199F4175119FD00C4A3C7 /* Default.png */,
 				D97199F6175119FD00C4A3C7 /* Default-Landscape~ipad.png */,
 				D97199F8175119FD00C4A3C7 /* fps_images.png */,
@@ -895,6 +914,10 @@
 				D9719A09175119FD00C4A3C7 /* Icon@2x.png in Resources */,
 				D9719A0C175119FD00C4A3C7 /* iTunesArtwork in Resources */,
 				D9719B4A17511A0100C4A3C7 /* ChangeLog in Resources */,
+				D9C2536B1752DB0A009EF2DD /* atlas1.plist in Resources */,
+				D9C2536C1752DB0A009EF2DD /* atlas1.png in Resources */,
+				D9C253721752DE8B009EF2DD /* atlas_chara.plist in Resources */,
+				D9C253731752DE8B009EF2DD /* atlas_chara.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1009,6 +1032,7 @@
 				D9719B6C17511A0200C4A3C7 /* AppDelegate.m in Sources */,
 				D9719B6F17511A0200C4A3C7 /* HelloWorldLayer.m in Sources */,
 				D9719B7217511A0200C4A3C7 /* IntroLayer.m in Sources */,
+				D9C2536F1752DCFD009EF2DD /* Player.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,6 +1136,7 @@
 				D9719B7717511A0200C4A3C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

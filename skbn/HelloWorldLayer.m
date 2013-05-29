@@ -44,22 +44,62 @@
 	if( (self=[super init]) ) {
         
         //ステージ生成
-        NSArray* map = [[NSArray alloc] initWithObjects:
-            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-            20, 20, 16, 16, 16, 16, 16, 16, 16, 20, 20, 20,
-            20, 20, 16, 19, 20, 19, 20, 19, 16, 20, 20, 20,
-            20, 20, 16, 20, 17, 17, 17, 20, 16, 20, 20, 20,
-            20, 20, 16, 19, 17, 04, 17, 19, 16, 20, 20, 20,
-            20, 20, 16, 20, 17, 17, 17, 20, 16, 20, 20, 20,
-            20, 20, 16, 19, 20, 19, 20, 19, 16, 20, 20, 20,
-            20, 20, 16, 16, 16, 16, 16, 16, 16, 20, 20, 20,
-            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+        NSMutableArray* map = [NSMutableArray arrayWithCapacity:STAGE_WIDTH*STAGE_HEIGHT];
         
-        for (int i = 0; i < STAGE_WIDTH*STAGE_HEIGHT; ++i){
+        //file read
+        NSString* TextFileName;
+        NSString* TextFilePath;
+        
+        TextFileName = @"example.txt";
+        TextFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:TextFileName];
+        
+        NSInteger line_index;
+        
+        NSString* file_data;
+        NSArray* data_lines;
+        NSString* data_line;
+        
+        NSError* is_error = nil;
+        
+        // TextFilePath で指定されたテキストファイルを UTF8 形式で開きます。
+        file_data = [NSString stringWithContentsOfFile:TextFilePath encoding:NSUTF8StringEncoding error:&is_error];
+        
+        if (is_error == nil)
+        {
+            // 改行ごとにファイルの内容を分割しています。
+            data_lines = [file_data componentsSeparatedByString:@"\n"];
+            
+            // 存在する行の数だけ、繰り返し処理を行います。
+            for (line_index = 0; line_index < data_lines.count; line_index++)
+            {
+                data_line = [data_lines objectAtIndex:line_index];
+                
+                NSLog(@"line<%@>",data_line);
+                
+            }
         }
+        else
+        {
+            // ファイルが開けなかった場合のエラー処理です。
+            NSLog([is_error localizedDescription]);
+        }
+        
+//        NSArray* map = [[NSArray alloc] initWithObjects:
+//            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+//            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+//            20, 20, 16, 16, 16, 16, 16, 16, 16, 20, 20, 20,
+//            20, 20, 16, 19, 20, 19, 20, 19, 16, 20, 20, 20,
+//            20, 20, 16, 20, 17, 17, 17, 20, 16, 20, 20, 20,
+//            20, 20, 16, 19, 17, 04, 17, 19, 16, 20, 20, 20,
+//            20, 20, 16, 20, 17, 17, 17, 20, 16, 20, 20, 20,
+//            20, 20, 16, 19, 20, 19, 20, 19, 16, 20, 20, 20,
+//            20, 20, 16, 16, 16, 16, 16, 16, 16, 20, 20, 20,
+//            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+//            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
+//            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+//        
+//        for (int i = 0; i < STAGE_WIDTH*STAGE_HEIGHT; ++i){
+//        }
         
         //プレイヤー生成
         Player* player = [Player player];

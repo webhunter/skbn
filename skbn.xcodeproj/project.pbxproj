@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4080163017564A31004D479F /* example.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4080162F17564A31004D479F /* example.txt */; };
+		40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */; };
 		D97199E1175119FD00C4A3C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E0175119FD00C4A3C7 /* QuartzCore.framework */; };
 		D97199E3175119FD00C4A3C7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E2175119FD00C4A3C7 /* OpenGLES.framework */; };
 		D97199E5175119FD00C4A3C7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E4175119FD00C4A3C7 /* OpenAL.framework */; };
@@ -141,6 +143,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4080162F17564A31004D479F /* example.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.txt; path = ../../../Desktop/example.txt; sourceTree = "<group>"; };
+		40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D97199DD175119FD00C4A3C7 /* skbn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skbn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97199E0175119FD00C4A3C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D97199E2175119FD00C4A3C7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -435,6 +439,7 @@
 		D97199D4175119FD00C4A3C7 = {
 			isa = PBXGroup;
 			children = (
+				40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */,
 				D97199F2175119FD00C4A3C7 /* skbn */,
 				D97199DF175119FD00C4A3C7 /* Frameworks */,
 				D97199DE175119FD00C4A3C7 /* Products */,
@@ -487,6 +492,7 @@
 		D97199F3175119FD00C4A3C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4080162F17564A31004D479F /* example.txt */,
 				D9C253701752DE8B009EF2DD /* atlas_chara.plist */,
 				D9C253711752DE8B009EF2DD /* atlas_chara.png */,
 				D9C253691752DB0A009EF2DD /* atlas1.plist */,
@@ -918,6 +924,8 @@
 				D9C2536C1752DB0A009EF2DD /* atlas1.png in Resources */,
 				D9C253721752DE8B009EF2DD /* atlas_chara.plist in Resources */,
 				D9C253731752DE8B009EF2DD /* atlas_chara.png in Resources */,
+				40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */,
+				4080163017564A31004D479F /* example.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1043,7 +1051,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1055,6 +1064,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1064,7 +1075,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -1074,6 +1086,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

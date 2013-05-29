@@ -18,14 +18,14 @@
 {
 	//atlas読み込み
     CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-    [frameCache addSpriteFramesWithFile:@"atlas1.plist"];
+    [frameCache addSpriteFramesWithFile:@"atlas_chara.plist"];
     
     //スプライトのフレーム名を使って画像読み込み
-    if ((self = [super initWithFile:@"atlas1.png"]))
+    if ((self = [super initWithFile:@"atlas_chara.png"]))
 	{
         //アニメーションフレームを読み込み
         NSMutableArray* frames = [NSMutableArray arrayWithCapacity:9];
-        for (int i=1; i<9; i++){
+        for (int i=1; i<5; i++){
             NSString* file = [NSString stringWithFormat:@" chara_0%i.png",i];
             CCSpriteFrame* frame = [frameCache spriteFrameByName:file];
             [frames addObject:frame];

@@ -26,8 +26,10 @@
 //#define GAME_AUTOROTATION kGameAutorotationNone
 
 //★★★追加
-#define STAGE_WIDTH 12
-#define STAGE_HEIGHT 12
-
+#define MAP_WIDTH 11
+#define MAP_HEIGHT 13
+#define SIZE_TILE 22
+#define MAP_OFFSET_X 50
+#define MAP_OFFSET_Y 20
 
 #endif // __GAME_CONFIG_H

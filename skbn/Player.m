@@ -10,23 +10,27 @@
 
 @implementation Player
 
+@synthesize velocity_=velocity;
+
 +(id)player{
     return [[[self alloc] initPlayer] autorelease];
 }
 
 -(id) initPlayer
 {
-	//atlas読み込み
-    CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-    [frameCache addSpriteFramesWithFile:@"atlas_chara.plist"];
-    
     //スプライトのフレーム名を使って画像読み込み
-    if ((self = [super initWithFile:@"atlas_chara.png"]))
+    if ((self = [super initWithFile:@"atlas_1.png"]))
 	{
-        //アニメーションフレームを読み込み
+        //速度初期化
+        self.velocity_ = ccp(0,100);
+        
+        //キャッシュを読み込み
+        CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+        
         NSMutableArray* frames = [NSMutableArray arrayWithCapacity:9];
-        for (int i=1; i<5; i++){
-            NSString* file = [NSString stringWithFormat:@" chara_0%i.png",i];
+        for (int i=5; i<9; i++){
+            NSString* file = [NSString stringWithFormat:@"img_%02d.png",i];
+            
             CCSpriteFrame* frame = [frameCache spriteFrameByName:file];
             [frames addObject:frame];
         }

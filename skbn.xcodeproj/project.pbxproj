@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4080163017564A31004D479F /* example.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4080162F17564A31004D479F /* example.txt */; };
+		404D92A017573D400031B851 /* RollingStone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 404D929E17573D400031B851 /* RollingStone.plist */; };
+		404D92A117573D400031B851 /* RollingStone.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D929F17573D400031B851 /* RollingStone.png */; };
+		404D92BB175755A20031B851 /* joystick-stick.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D92B9175755A10031B851 /* joystick-stick.png */; };
+		404D92BC175755A20031B851 /* joystick-sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D92BA175755A10031B851 /* joystick-sheet.png */; };
+		404D942817575FDA0031B851 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E0175119FD00C4A3C7 /* QuartzCore.framework */; };
+		4080163017564A31004D479F /* map_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4080162F17564A31004D479F /* map_1.txt */; };
 		40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */; };
-		D97199E1175119FD00C4A3C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E0175119FD00C4A3C7 /* QuartzCore.framework */; };
 		D97199E3175119FD00C4A3C7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E2175119FD00C4A3C7 /* OpenGLES.framework */; };
 		D97199E5175119FD00C4A3C7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E4175119FD00C4A3C7 /* OpenAL.framework */; };
 		D97199E7175119FD00C4A3C7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E6175119FD00C4A3C7 /* AudioToolbox.framework */; };
@@ -133,17 +137,33 @@
 		D9719B6417511A0200C4A3C7 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = D9719B6317511A0200C4A3C7 /* vec4.c */; };
 		D9719B6917511A0200C4A3C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B6817511A0200C4A3C7 /* main.m */; };
 		D9719B6C17511A0200C4A3C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B6B17511A0200C4A3C7 /* AppDelegate.m */; };
-		D9719B6F17511A0200C4A3C7 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B6E17511A0200C4A3C7 /* HelloWorldLayer.m */; };
+		D9719B6F17511A0200C4A3C7 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B6E17511A0200C4A3C7 /* GameScene.m */; };
 		D9719B7217511A0200C4A3C7 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9719B7117511A0200C4A3C7 /* IntroLayer.m */; };
-		D9C2536B1752DB0A009EF2DD /* atlas1.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C253691752DB0A009EF2DD /* atlas1.plist */; };
-		D9C2536C1752DB0A009EF2DD /* atlas1.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C2536A1752DB0A009EF2DD /* atlas1.png */; };
+		D9C2536B1752DB0A009EF2DD /* atlas_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C253691752DB0A009EF2DD /* atlas_1.plist */; };
+		D9C2536C1752DB0A009EF2DD /* atlas_1.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C2536A1752DB0A009EF2DD /* atlas_1.png */; };
 		D9C2536F1752DCFD009EF2DD /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C2536E1752DCFD009EF2DD /* Player.m */; };
 		D9C253721752DE8B009EF2DD /* atlas_chara.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C253701752DE8B009EF2DD /* atlas_chara.plist */; };
 		D9C253731752DE8B009EF2DD /* atlas_chara.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C253711752DE8B009EF2DD /* atlas_chara.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4080162F17564A31004D479F /* example.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = example.txt; path = ../../../Desktop/example.txt; sourceTree = "<group>"; };
+		404D929E17573D400031B851 /* RollingStone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RollingStone.plist; sourceTree = "<group>"; };
+		404D929F17573D400031B851 /* RollingStone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RollingStone.png; sourceTree = "<group>"; };
+		404D92B9175755A10031B851 /* joystick-stick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-stick.png"; sourceTree = "<group>"; };
+		404D92BA175755A10031B851 /* joystick-sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-sheet.png"; sourceTree = "<group>"; };
+		404D941C1757599D0031B851 /* SneakyJoystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystick.h; sourceTree = "<group>"; };
+		404D941D1757599D0031B851 /* SneakyJoystick.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyJoystick.m; sourceTree = "<group>"; };
+		404D941E17575A0C0031B851 /* SneakyJoystickSkinnedBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystickSkinnedBase.h; sourceTree = "<group>"; };
+		404D941F17575A0C0031B851 /* SneakyJoystickSkinnedBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyJoystickSkinnedBase.m; sourceTree = "<group>"; };
+		404D942017575A320031B851 /* ColoredCircleSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColoredCircleSprite.h; sourceTree = "<group>"; };
+		404D942117575A320031B851 /* ColoredSquareSprite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColoredSquareSprite.m; sourceTree = "<group>"; };
+		404D942217575A720031B851 /* SneakyButtonSkinnedBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyButtonSkinnedBase.h; sourceTree = "<group>"; };
+		404D942317575A720031B851 /* SneakyButtonSkinnedBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyButtonSkinnedBase.m; sourceTree = "<group>"; };
+		404D942417575AC50031B851 /* SneakyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyButton.h; sourceTree = "<group>"; };
+		404D942517575AC50031B851 /* SneakyButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyButton.m; sourceTree = "<group>"; };
+		404D942617575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystickSkinnedJoystickExample.h; sourceTree = "<group>"; };
+		404D942717575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyJoystickSkinnedJoystickExample.m; sourceTree = "<group>"; };
+		4080162F17564A31004D479F /* map_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = map_1.txt; path = ../../../Desktop/map_1.txt; sourceTree = "<group>"; };
 		40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D97199DD175119FD00C4A3C7 /* skbn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skbn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97199E0175119FD00C4A3C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -403,13 +423,13 @@
 		D9719B6817511A0200C4A3C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D9719B6A17511A0200C4A3C7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D9719B6B17511A0200C4A3C7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D9719B6D17511A0200C4A3C7 /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		D9719B6E17511A0200C4A3C7 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
+		D9719B6D17511A0200C4A3C7 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		D9719B6E17511A0200C4A3C7 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		D9719B7017511A0200C4A3C7 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		D9719B7117511A0200C4A3C7 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		D9AE61F11754351C007C443C /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
-		D9C253691752DB0A009EF2DD /* atlas1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas1.plist; sourceTree = "<group>"; };
-		D9C2536A1752DB0A009EF2DD /* atlas1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas1.png; sourceTree = "<group>"; };
+		D9C253691752DB0A009EF2DD /* atlas_1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas_1.plist; sourceTree = "<group>"; };
+		D9C2536A1752DB0A009EF2DD /* atlas_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas_1.png; sourceTree = "<group>"; };
 		D9C2536D1752DCFD009EF2DD /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		D9C2536E1752DCFD009EF2DD /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		D9C253701752DE8B009EF2DD /* atlas_chara.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas_chara.plist; sourceTree = "<group>"; };
@@ -421,7 +441,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D97199E1175119FD00C4A3C7 /* QuartzCore.framework in Frameworks */,
+				404D942817575FDA0031B851 /* QuartzCore.framework in Frameworks */,
 				D97199E3175119FD00C4A3C7 /* OpenGLES.framework in Frameworks */,
 				D97199E5175119FD00C4A3C7 /* OpenAL.framework in Frameworks */,
 				D97199E7175119FD00C4A3C7 /* AudioToolbox.framework in Frameworks */,
@@ -473,10 +493,22 @@
 		D97199F2175119FD00C4A3C7 /* skbn */ = {
 			isa = PBXGroup;
 			children = (
+				404D941C1757599D0031B851 /* SneakyJoystick.h */,
+				404D941D1757599D0031B851 /* SneakyJoystick.m */,
+				404D942217575A720031B851 /* SneakyButtonSkinnedBase.h */,
+				404D942317575A720031B851 /* SneakyButtonSkinnedBase.m */,
+				404D941E17575A0C0031B851 /* SneakyJoystickSkinnedBase.h */,
+				404D941F17575A0C0031B851 /* SneakyJoystickSkinnedBase.m */,
+				404D942617575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.h */,
+				404D942717575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.m */,
+				404D942417575AC50031B851 /* SneakyButton.h */,
+				404D942517575AC50031B851 /* SneakyButton.m */,
+				404D942017575A320031B851 /* ColoredCircleSprite.h */,
+				404D942117575A320031B851 /* ColoredSquareSprite.m */,
 				D9719B6A17511A0200C4A3C7 /* AppDelegate.h */,
 				D9719B6B17511A0200C4A3C7 /* AppDelegate.m */,
-				D9719B6D17511A0200C4A3C7 /* HelloWorldLayer.h */,
-				D9719B6E17511A0200C4A3C7 /* HelloWorldLayer.m */,
+				D9719B6D17511A0200C4A3C7 /* GameScene.h */,
+				D9719B6E17511A0200C4A3C7 /* GameScene.m */,
 				D9AE61F11754351C007C443C /* GameConfig.h */,
 				D9C2536D1752DCFD009EF2DD /* Player.h */,
 				D9C2536E1752DCFD009EF2DD /* Player.m */,
@@ -492,11 +524,15 @@
 		D97199F3175119FD00C4A3C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4080162F17564A31004D479F /* example.txt */,
+				404D92B9175755A10031B851 /* joystick-stick.png */,
+				404D92BA175755A10031B851 /* joystick-sheet.png */,
+				404D929E17573D400031B851 /* RollingStone.plist */,
+				404D929F17573D400031B851 /* RollingStone.png */,
+				4080162F17564A31004D479F /* map_1.txt */,
 				D9C253701752DE8B009EF2DD /* atlas_chara.plist */,
 				D9C253711752DE8B009EF2DD /* atlas_chara.png */,
-				D9C253691752DB0A009EF2DD /* atlas1.plist */,
-				D9C2536A1752DB0A009EF2DD /* atlas1.png */,
+				D9C253691752DB0A009EF2DD /* atlas_1.plist */,
+				D9C2536A1752DB0A009EF2DD /* atlas_1.png */,
 				D97199F4175119FD00C4A3C7 /* Default.png */,
 				D97199F6175119FD00C4A3C7 /* Default-Landscape~ipad.png */,
 				D97199F8175119FD00C4A3C7 /* fps_images.png */,
@@ -920,12 +956,16 @@
 				D9719A09175119FD00C4A3C7 /* Icon@2x.png in Resources */,
 				D9719A0C175119FD00C4A3C7 /* iTunesArtwork in Resources */,
 				D9719B4A17511A0100C4A3C7 /* ChangeLog in Resources */,
-				D9C2536B1752DB0A009EF2DD /* atlas1.plist in Resources */,
-				D9C2536C1752DB0A009EF2DD /* atlas1.png in Resources */,
+				D9C2536B1752DB0A009EF2DD /* atlas_1.plist in Resources */,
+				D9C2536C1752DB0A009EF2DD /* atlas_1.png in Resources */,
 				D9C253721752DE8B009EF2DD /* atlas_chara.plist in Resources */,
 				D9C253731752DE8B009EF2DD /* atlas_chara.png in Resources */,
 				40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */,
-				4080163017564A31004D479F /* example.txt in Resources */,
+				4080163017564A31004D479F /* map_1.txt in Resources */,
+				404D92A017573D400031B851 /* RollingStone.plist in Resources */,
+				404D92A117573D400031B851 /* RollingStone.png in Resources */,
+				404D92BB175755A20031B851 /* joystick-stick.png in Resources */,
+				404D92BC175755A20031B851 /* joystick-sheet.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1038,7 +1078,7 @@
 				D9719B6417511A0200C4A3C7 /* vec4.c in Sources */,
 				D9719B6917511A0200C4A3C7 /* main.m in Sources */,
 				D9719B6C17511A0200C4A3C7 /* AppDelegate.m in Sources */,
-				D9719B6F17511A0200C4A3C7 /* HelloWorldLayer.m in Sources */,
+				D9719B6F17511A0200C4A3C7 /* GameScene.m in Sources */,
 				D9719B7217511A0200C4A3C7 /* IntroLayer.m in Sources */,
 				D9C2536F1752DCFD009EF2DD /* Player.m in Sources */,
 			);

@@ -29,7 +29,7 @@
 #define MAP_WIDTH 11
 #define MAP_HEIGHT 13
 #define SIZE_TILE 22
-#define MAP_OFFSET_X 50
-#define MAP_OFFSET_Y 20
+#define MAP_OFFSET_X 150
+#define MAP_OFFSET_Y 30
 
 #endif // __GAME_CONFIG_H

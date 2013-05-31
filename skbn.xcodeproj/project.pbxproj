@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40077CE217589DF200581F88 /* map_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 40077CE117589DF200581F88 /* map_1.txt */; };
 		404D92A017573D400031B851 /* RollingStone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 404D929E17573D400031B851 /* RollingStone.plist */; };
 		404D92A117573D400031B851 /* RollingStone.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D929F17573D400031B851 /* RollingStone.png */; };
 		404D92BB175755A20031B851 /* joystick-stick.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D92B9175755A10031B851 /* joystick-stick.png */; };
 		404D92BC175755A20031B851 /* joystick-sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D92BA175755A10031B851 /* joystick-sheet.png */; };
 		404D942817575FDA0031B851 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E0175119FD00C4A3C7 /* QuartzCore.framework */; };
-		4080163017564A31004D479F /* map_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4080162F17564A31004D479F /* map_1.txt */; };
 		40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */; };
 		D97199E3175119FD00C4A3C7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E2175119FD00C4A3C7 /* OpenGLES.framework */; };
 		D97199E5175119FD00C4A3C7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E4175119FD00C4A3C7 /* OpenAL.framework */; };
@@ -147,6 +147,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40077CE117589DF200581F88 /* map_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = map_1.txt; sourceTree = "<group>"; };
 		404D929E17573D400031B851 /* RollingStone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RollingStone.plist; sourceTree = "<group>"; };
 		404D929F17573D400031B851 /* RollingStone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RollingStone.png; sourceTree = "<group>"; };
 		404D92B9175755A10031B851 /* joystick-stick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-stick.png"; sourceTree = "<group>"; };
@@ -163,7 +164,6 @@
 		404D942517575AC50031B851 /* SneakyButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyButton.m; sourceTree = "<group>"; };
 		404D942617575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystickSkinnedJoystickExample.h; sourceTree = "<group>"; };
 		404D942717575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyJoystickSkinnedJoystickExample.m; sourceTree = "<group>"; };
-		4080162F17564A31004D479F /* map_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = map_1.txt; path = ../../../Desktop/map_1.txt; sourceTree = "<group>"; };
 		40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D97199DD175119FD00C4A3C7 /* skbn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skbn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97199E0175119FD00C4A3C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -524,11 +524,11 @@
 		D97199F3175119FD00C4A3C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				40077CE117589DF200581F88 /* map_1.txt */,
 				404D92B9175755A10031B851 /* joystick-stick.png */,
 				404D92BA175755A10031B851 /* joystick-sheet.png */,
 				404D929E17573D400031B851 /* RollingStone.plist */,
 				404D929F17573D400031B851 /* RollingStone.png */,
-				4080162F17564A31004D479F /* map_1.txt */,
 				D9C253701752DE8B009EF2DD /* atlas_chara.plist */,
 				D9C253711752DE8B009EF2DD /* atlas_chara.png */,
 				D9C253691752DB0A009EF2DD /* atlas_1.plist */,
@@ -961,11 +961,11 @@
 				D9C253721752DE8B009EF2DD /* atlas_chara.plist in Resources */,
 				D9C253731752DE8B009EF2DD /* atlas_chara.png in Resources */,
 				40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */,
-				4080163017564A31004D479F /* map_1.txt in Resources */,
 				404D92A017573D400031B851 /* RollingStone.plist in Resources */,
 				404D92A117573D400031B851 /* RollingStone.png in Resources */,
 				404D92BB175755A20031B851 /* joystick-stick.png in Resources */,
 				404D92BC175755A20031B851 /* joystick-sheet.png in Resources */,
+				40077CE217589DF200581F88 /* map_1.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

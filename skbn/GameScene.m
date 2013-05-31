@@ -61,6 +61,9 @@ static GameScene* instanceOfGameScene;
         //@@@初期化処理
         span = 1;
         timer_span = 10;
+        blockMap = [NSMutableArray array];
+        
+        CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
         //タッチイベント
         self.isTouchEnabled = YES;
@@ -71,12 +74,49 @@ static GameScene* instanceOfGameScene;
         [frameCache addSpriteFramesWithFile:@"atlas_1.plist"];
         [atlasImg initWithFile:@"atlas_1.png"];
         
+        //操作UI描画
+        
+        //左
+        btn_l = [CCMenuItemImage
+                          itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                                  target:self selector:@selector(controllerTapped:)];
+        btn_l.position = ccp(screenSize.width/5, screenSize.height/4);
+        
+        float btnSizeWidth = btn_l.contentSize.width;
+        float btnSizeHeight = btn_l.contentSize.height;
+        
+        //下
+        btn_d = [CCMenuItemImage
+                 itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                 target:self selector:@selector(controllerTapped:)];
+        btn_d.position = ccp(screenSize.width/5+btnSizeWidth/2, screenSize.height/4-btnSizeHeight);
+        
+        //右
+        btn_r = [CCMenuItemImage
+                                  itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                                  target:self selector:@selector(controllerTapped:)];
+        btn_r.position = ccp(screenSize.width/5+btnSizeWidth, screenSize.height/4);
+        
+        //上
+        btn_u = [CCMenuItemImage
+                 itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                 target:self selector:@selector(controllerTapped:)];
+        btn_u.position = ccp(screenSize.width/5+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
+        
+        //メニューに追加
+        CCMenu *controlMenu = [CCMenu menuWithItems:btn_l,btn_d,btn_r,btn_u, nil];
+        
+        controlMenu.position = CGPointZero;
+        [self addChild:controlMenu z:3 tag:ControlUITagGame];
+        
         //マップ読み込み
         NSInteger stageNum = 1;
         NSArray* map = [self loadMap:stageNum];
         
         //マップ描画
-        CGSize screenSize = [[CCDirector sharedDirector] winSize];
+//        spriteBatch = [CCSpriteBatchNode batchNodeWithFile:@"img_20.png"];
+//        [self addChild:spriteBatch z:1 tag:GameSceneNodeTagTreasureSpriteBatch];
+        
         NSString* point;
         for (int i=0; i<MAP_HEIGHT; i++){
             for (int j=0; j<MAP_WIDTH; j++){
@@ -93,18 +133,23 @@ static GameScene* instanceOfGameScene;
                 else{
                     NSString* file = [NSString stringWithFormat:@"img_%02d.png",point_coord];
                     CCSpriteFrame* tmp = [frameCache spriteFrameByName:file];
-                    CCSprite* img = [CCSprite spriteWithSpriteFrame:tmp];
-                    img.position = ccp(MAP_OFFSET_X + j * SIZE_TILE, screenSize.height - (MAP_OFFSET_Y + i * SIZE_TILE));
-                    [self addChild:img];
+                    CCSprite* wall = [CCSprite spriteWithSpriteFrame:tmp];
+                    wall.position = ccp(MAP_OFFSET_X + j * SIZE_TILE, screenSize.height - (MAP_OFFSET_Y + i * SIZE_TILE));
+                    
+//                    [spriteBatch addChild:wall z:1 tag:GameSceneNodeTagTreasureSpriteBatch];
+                    [self addChild:wall z:0 tag:WallTag];
                 }
             }
         }
         
         //ブロック生成
-        Player* player = [Player player];
-        blockPointer = player;
-        player.position = ccp(MAP_OFFSET_X + SIZE_TILE, screenSize.height - MAP_OFFSET_Y);
-        [self addChild:player];
+        Player* block_1 = [Player player];
+        block_1.position = ccp(MAP_OFFSET_X + SIZE_TILE, screenSize.height - MAP_OFFSET_Y);
+        [blockMap addObject:block_1];
+        
+        NSLog(@"%d",blockMap.count);
+        
+        [self addChild:block_1];
         
         [self scheduleUpdate];
 		
@@ -171,6 +216,55 @@ static GameScene* instanceOfGameScene;
 	return self;
 }
 
+//コントローラ
+- (void)controllerTapped:(id)sender{
+//    NSLog(@"sender:%d");
+    
+    CCMenuItemImage* btn = sender;
+    CGPoint distance = CGPointMake(0, 0);
+    
+    if (btn.hash == btn_u.hash) {   //上
+        distance.y = SIZE_TILE;
+    }
+    else if (btn.hash == btn_l.hash) {   //左
+        distance.x = -SIZE_TILE;
+    }
+    else if (btn.hash == btn_d.hash) {   //下
+        distance.y = -SIZE_TILE;
+    }
+    else if (btn.hash == btn_r.hash) {   //右
+        distance.x = SIZE_TILE;
+    }
+    
+    //移動
+    [self move:distance];
+//    Player* block= [blockMap objectAtIndex:0];
+//    block.position = CGPointMake(block.position.x + distance.x, block.position.y + distance.y);
+}
+
+//移動メソッド
+//戻り値は移動し続けるかどうか
+-(void)move:(CGPoint)distance{
+    
+    //壁と衝突していなければ移動する
+    
+    Player* block= [blockMap objectAtIndex:0];
+    
+    if ([self hitCheck:blockMap]) {
+        block.position = CGPointMake(block.position.x + distance.x, block.position.y + distance.y);
+    }else{  //衝突している場合は、ブロック参照用ポインタを空にする
+        [blockMap removeAllObjects];
+    }
+}
+
+//衝突判定メソッド
+-(BOOL)hitCheck:(NSArray*)blockMap{
+    NSMutableArray* wallArray = [self getChildByTag:WallTag];
+    NSLog(@"wall object:%d", wallArray.count);
+    
+    return YES;
+}
+
 //更新するタイミングを取得する
 -(int)getMoveTime:(float)span{
     
@@ -188,11 +282,15 @@ static GameScene* instanceOfGameScene;
     if (displayTime < currentTime) {
         displayTime = currentTime;
         
-        NSLog(@"★★★GameScene:update[%i]",currentTime);
+//        NSLog(@"★★★GameScene:update[%i]",currentTime);
         //        NSLog(@"★★★timer_span[%d]",(int)lifeTime%timer_span);
-        NSLog(@"★★★span[%lf]",span);
+//        NSLog(@"★★★span[%lf]",span);
         
-        blockPointer.position = ccp(blockPointer.position.x, blockPointer.position.y - 100  * delta);
+        CGPoint distance = CGPointMake(0, 0);
+        distance.y = -100*delta;
+        
+        [self move:distance];
+//        block_1.position = ccp(block_1.position.x, block_1.position.y - 100  * delta);
         
         //規定時間置きに早くなる
         if (currentTime%timer_span == 0) {

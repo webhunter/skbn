@@ -21,8 +21,19 @@ typedef enum
 {
 	GameSceneLayerTagGame = 1,
 	GameSceneLayerTagInput,
+    GameSceneNodeTagTreasureSpriteBatch,
+    ControlUITagGame,
+    WallTag,
 	
 } GameSceneLayerTags;
+
+typedef enum
+{
+    up = 1,
+    right,
+    down,
+    left,
+} keyDirection;
 
 // GameScene
 @interface GameScene : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
@@ -30,7 +41,17 @@ typedef enum
     CCSprite* atlasImg;
     SneakyJoystick *leftJoystick;
     
-    CCSprite* blockPointer;
+    CCSpriteBatchNode* spriteBatch;
+    
+    CCMenuItemImage* btn_u;
+    CCMenuItemImage* btn_r;
+    CCMenuItemImage* btn_d;
+    CCMenuItemImage* btn_l;
+    
+    //現在操作中のブロックを指すポインタ
+    NSMutableArray* blockMap;
+//    CCSprite* block_1;
+//    CCSprite* block_2;
     
     int displayTime;
     ccTime lifeTime;

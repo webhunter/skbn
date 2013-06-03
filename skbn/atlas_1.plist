@@ -270,13 +270,13 @@
 		<key>format</key>
 		<integer>2</integer>
 		<key>realTextureFileName</key>
-		<string>atlas1.png</string>
+		<string>atlas_1.png</string>
 		<key>size</key>
 		<string>{512,128}</string>
 		<key>smartupdate</key>
 		<string>$TexturePacker:SmartUpdate:040cf87de0c6042fb6c0147d0675fe80$</string>
 		<key>textureFileName</key>
-		<string>atlas1.png</string>
+		<string>atlas_1.png</string>
 	</dict>
 </dict>
 </plist>

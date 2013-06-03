@@ -11,11 +11,10 @@
 
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
+#import "CCNode.h"
 
 #import "GameConfig.h"
-
-@class SneakyJoystick;
-//@class SneakyButton;
+#import "Player.h"
 
 typedef enum
 {
@@ -24,22 +23,23 @@ typedef enum
     GameSceneNodeTagTreasureSpriteBatch,
     ControlUITagGame,
     WallTag,
+    BlockTag,
 	
 } GameSceneLayerTags;
 
 typedef enum
 {
-    up = 1,
-    right,
-    down,
-    left,
+    UP = 1,
+    RIGHT,
+    DOWN,
+    LEFT,
+    NOP,
 } keyDirection;
 
 // GameScene
 @interface GameScene : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
 {
     CCSprite* atlasImg;
-    SneakyJoystick *leftJoystick;
     
     CCSpriteBatchNode* spriteBatch;
     
@@ -48,8 +48,14 @@ typedef enum
     CCMenuItemImage* btn_d;
     CCMenuItemImage* btn_l;
     
+    CCSpriteBatchNode* wallList;  //壁
+    
     //現在操作中のブロックを指すポインタ
-    NSMutableArray* blockMap;
+    Player* activeBlock;
+//    CCSprite* activeBlock;
+//    Player* activeBlock;
+//    CCNode* activeBlockList;
+//    NSMutableArray* blockMap;
 //    CCSprite* block_1;
 //    CCSprite* block_2;
     
@@ -63,5 +69,8 @@ typedef enum
 // returns a CCScene that contains the GameScene as the only child
 +(CCScene *) scene;
 +(GameScene*) sharedGameScene;
+
+@property (atomic,retain)Player* activeBlock_;
+@property (atomic,retain)CCSpriteBatchNode* wallList_;
 
 @end

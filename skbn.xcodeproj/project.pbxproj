@@ -14,6 +14,11 @@
 		404D92BC175755A20031B851 /* joystick-sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D92BA175755A10031B851 /* joystick-sheet.png */; };
 		404D942817575FDA0031B851 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E0175119FD00C4A3C7 /* QuartzCore.framework */; };
 		40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */; };
+		D925E738175C1C9B00EFB337 /* bkimg_01.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E733175C1C9B00EFB337 /* bkimg_01.png */; };
+		D925E739175C1C9B00EFB337 /* gls_blue_down.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E734175C1C9B00EFB337 /* gls_blue_down.png */; };
+		D925E73A175C1C9B00EFB337 /* gls_blue_up.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E735175C1C9B00EFB337 /* gls_blue_up.png */; };
+		D925E73B175C1C9B00EFB337 /* gls_green.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E736175C1C9B00EFB337 /* gls_green.png */; };
+		D925E73C175C1C9B00EFB337 /* gls_red.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E737175C1C9B00EFB337 /* gls_red.png */; };
 		D97199E3175119FD00C4A3C7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E2175119FD00C4A3C7 /* OpenGLES.framework */; };
 		D97199E5175119FD00C4A3C7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E4175119FD00C4A3C7 /* OpenAL.framework */; };
 		D97199E7175119FD00C4A3C7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E6175119FD00C4A3C7 /* AudioToolbox.framework */; };
@@ -144,6 +149,8 @@
 		D9C2536F1752DCFD009EF2DD /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C2536E1752DCFD009EF2DD /* Player.m */; };
 		D9C253721752DE8B009EF2DD /* atlas_chara.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9C253701752DE8B009EF2DD /* atlas_chara.plist */; };
 		D9C253731752DE8B009EF2DD /* atlas_chara.png in Resources */ = {isa = PBXBuildFile; fileRef = D9C253711752DE8B009EF2DD /* atlas_chara.png */; };
+		D9CB476C175A53AE00645FD2 /* FieldUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = D9CB476B175A53AE00645FD2 /* FieldUnit.m */; };
+		D9CB476F175A56B300645FD2 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = D9CB476E175A56B300645FD2 /* Wall.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,19 +159,12 @@
 		404D929F17573D400031B851 /* RollingStone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RollingStone.png; sourceTree = "<group>"; };
 		404D92B9175755A10031B851 /* joystick-stick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-stick.png"; sourceTree = "<group>"; };
 		404D92BA175755A10031B851 /* joystick-sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-sheet.png"; sourceTree = "<group>"; };
-		404D941C1757599D0031B851 /* SneakyJoystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystick.h; sourceTree = "<group>"; };
-		404D941D1757599D0031B851 /* SneakyJoystick.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyJoystick.m; sourceTree = "<group>"; };
-		404D941E17575A0C0031B851 /* SneakyJoystickSkinnedBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystickSkinnedBase.h; sourceTree = "<group>"; };
-		404D941F17575A0C0031B851 /* SneakyJoystickSkinnedBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyJoystickSkinnedBase.m; sourceTree = "<group>"; };
-		404D942017575A320031B851 /* ColoredCircleSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColoredCircleSprite.h; sourceTree = "<group>"; };
-		404D942117575A320031B851 /* ColoredSquareSprite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColoredSquareSprite.m; sourceTree = "<group>"; };
-		404D942217575A720031B851 /* SneakyButtonSkinnedBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyButtonSkinnedBase.h; sourceTree = "<group>"; };
-		404D942317575A720031B851 /* SneakyButtonSkinnedBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyButtonSkinnedBase.m; sourceTree = "<group>"; };
-		404D942417575AC50031B851 /* SneakyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyButton.h; sourceTree = "<group>"; };
-		404D942517575AC50031B851 /* SneakyButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyButton.m; sourceTree = "<group>"; };
-		404D942617575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystickSkinnedJoystickExample.h; sourceTree = "<group>"; };
-		404D942717575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SneakyJoystickSkinnedJoystickExample.m; sourceTree = "<group>"; };
 		40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D925E733175C1C9B00EFB337 /* bkimg_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bkimg_01.png; sourceTree = "<group>"; };
+		D925E734175C1C9B00EFB337 /* gls_blue_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_blue_down.png; sourceTree = "<group>"; };
+		D925E735175C1C9B00EFB337 /* gls_blue_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_blue_up.png; sourceTree = "<group>"; };
+		D925E736175C1C9B00EFB337 /* gls_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_green.png; sourceTree = "<group>"; };
+		D925E737175C1C9B00EFB337 /* gls_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_red.png; sourceTree = "<group>"; };
 		D97199DD175119FD00C4A3C7 /* skbn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skbn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97199E0175119FD00C4A3C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D97199E2175119FD00C4A3C7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -434,6 +434,10 @@
 		D9C2536E1752DCFD009EF2DD /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		D9C253701752DE8B009EF2DD /* atlas_chara.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = atlas_chara.plist; sourceTree = "<group>"; };
 		D9C253711752DE8B009EF2DD /* atlas_chara.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlas_chara.png; sourceTree = "<group>"; };
+		D9CB476A175A53AE00645FD2 /* FieldUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldUnit.h; sourceTree = "<group>"; };
+		D9CB476B175A53AE00645FD2 /* FieldUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldUnit.m; sourceTree = "<group>"; };
+		D9CB476D175A56B300645FD2 /* Wall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wall.h; sourceTree = "<group>"; };
+		D9CB476E175A56B300645FD2 /* Wall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -493,23 +497,15 @@
 		D97199F2175119FD00C4A3C7 /* skbn */ = {
 			isa = PBXGroup;
 			children = (
-				404D941C1757599D0031B851 /* SneakyJoystick.h */,
-				404D941D1757599D0031B851 /* SneakyJoystick.m */,
-				404D942217575A720031B851 /* SneakyButtonSkinnedBase.h */,
-				404D942317575A720031B851 /* SneakyButtonSkinnedBase.m */,
-				404D941E17575A0C0031B851 /* SneakyJoystickSkinnedBase.h */,
-				404D941F17575A0C0031B851 /* SneakyJoystickSkinnedBase.m */,
-				404D942617575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.h */,
-				404D942717575EC30031B851 /* SneakyJoystickSkinnedJoystickExample.m */,
-				404D942417575AC50031B851 /* SneakyButton.h */,
-				404D942517575AC50031B851 /* SneakyButton.m */,
-				404D942017575A320031B851 /* ColoredCircleSprite.h */,
-				404D942117575A320031B851 /* ColoredSquareSprite.m */,
 				D9719B6A17511A0200C4A3C7 /* AppDelegate.h */,
 				D9719B6B17511A0200C4A3C7 /* AppDelegate.m */,
 				D9719B6D17511A0200C4A3C7 /* GameScene.h */,
 				D9719B6E17511A0200C4A3C7 /* GameScene.m */,
 				D9AE61F11754351C007C443C /* GameConfig.h */,
+				D9CB476A175A53AE00645FD2 /* FieldUnit.h */,
+				D9CB476B175A53AE00645FD2 /* FieldUnit.m */,
+				D9CB476D175A56B300645FD2 /* Wall.h */,
+				D9CB476E175A56B300645FD2 /* Wall.m */,
 				D9C2536D1752DCFD009EF2DD /* Player.h */,
 				D9C2536E1752DCFD009EF2DD /* Player.m */,
 				D9719B7017511A0200C4A3C7 /* IntroLayer.h */,
@@ -524,6 +520,11 @@
 		D97199F3175119FD00C4A3C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D925E733175C1C9B00EFB337 /* bkimg_01.png */,
+				D925E734175C1C9B00EFB337 /* gls_blue_down.png */,
+				D925E735175C1C9B00EFB337 /* gls_blue_up.png */,
+				D925E736175C1C9B00EFB337 /* gls_green.png */,
+				D925E737175C1C9B00EFB337 /* gls_red.png */,
 				40077CE117589DF200581F88 /* map_1.txt */,
 				404D92B9175755A10031B851 /* joystick-stick.png */,
 				404D92BA175755A10031B851 /* joystick-sheet.png */,
@@ -966,6 +967,11 @@
 				404D92BB175755A20031B851 /* joystick-stick.png in Resources */,
 				404D92BC175755A20031B851 /* joystick-sheet.png in Resources */,
 				40077CE217589DF200581F88 /* map_1.txt in Resources */,
+				D925E738175C1C9B00EFB337 /* bkimg_01.png in Resources */,
+				D925E739175C1C9B00EFB337 /* gls_blue_down.png in Resources */,
+				D925E73A175C1C9B00EFB337 /* gls_blue_up.png in Resources */,
+				D925E73B175C1C9B00EFB337 /* gls_green.png in Resources */,
+				D925E73C175C1C9B00EFB337 /* gls_red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,6 +1087,8 @@
 				D9719B6F17511A0200C4A3C7 /* GameScene.m in Sources */,
 				D9719B7217511A0200C4A3C7 /* IntroLayer.m in Sources */,
 				D9C2536F1752DCFD009EF2DD /* Player.m in Sources */,
+				D9CB476C175A53AE00645FD2 /* FieldUnit.m in Sources */,
+				D9CB476F175A56B300645FD2 /* Wall.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,8 +1099,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: RINA OIKAWA (3558E4SKFP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RINA OIKAWA (3558E4SKFP)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1104,8 +1112,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "5FDA4A88-6A50-4FA1-9398-24D4CF654412";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5FDA4A88-6A50-4FA1-9398-24D4CF654412";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1115,8 +1123,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RINA OIKAWA (5K4A996YYM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: RINA OIKAWA (3558E4SKFP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RINA OIKAWA (3558E4SKFP)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -1126,8 +1134,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "5FDA4A88-6A50-4FA1-9398-24D4CF654412";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5FDA4A88-6A50-4FA1-9398-24D4CF654412";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

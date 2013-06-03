@@ -10,19 +10,26 @@
 
 @implementation Player
 
+@synthesize grid_x_ = grid_x;
+@synthesize grid_y_ = grid_y;
+@synthesize direct_ = direct;
 @synthesize velocity_=velocity;
 
-+(id)player{
-    return [[[self alloc] initPlayer] autorelease];
++(id) initialize:(NSInteger)g_x :(NSInteger)g_y
+{
+    return [[[self alloc] initObject:g_x :g_y] autorelease];
 }
 
--(id) initPlayer
+-(id) initObject:(NSInteger)g_x :(NSInteger)g_y
 {
-    //スプライトのフレーム名を使って画像読み込み
     if ((self = [super initWithFile:@"atlas_1.png"]))
 	{
+        //座標初期化
+        grid_x = g_x;
+        grid_y = g_y;
+        
         //速度初期化
-        self.velocity_ = ccp(0,100);
+        self.velocity_ = ccp(0,1);
         
         //キャッシュを読み込み
         CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
@@ -31,6 +38,7 @@
         for (int i=5; i<9; i++){
             NSString* file = [NSString stringWithFormat:@"img_%02d.png",i];
             
+            //[CCSprite spriteWithSpriteFrame:frm];
             CCSpriteFrame* frame = [frameCache spriteFrameByName:file];
             [frames addObject:frame];
         }
@@ -45,8 +53,8 @@
         [self runAction:repeat];
         
         [self scheduleUpdate];
-        
     }
+
     return self;
 }
 

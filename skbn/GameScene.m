@@ -11,12 +11,13 @@
 #import "GameScene.h"
 #import "Player.h"
 #import "GameConfig.h"
-#import "SneakyJoystick.h"
-#import "SneakyJoystickSkinnedJoystickExample.h"
+//#import "SneakyJoystick.h"
+//#import "SneakyJoystickSkinnedJoystickExample.h"
 //#import "SneakyJoystickSkinnedDPadExample.h"
-#import "SneakyButton.h"
-#import "SneakyButtonSkinnedBase.h"
-#import "ColoredCircleSprite.h"
+//#import "SneakyButton.h"
+//#import "SneakyButtonSkinnedBase.h"
+//#import "ColoredCircleSprite.h"
+#import "Wall.h"
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
@@ -25,6 +26,9 @@
 
 // GameScene implementation
 @implementation GameScene
+
+@synthesize activeBlock_ = activeBlock;
+@synthesize wallList_ = wallList;
 
 static GameScene* instanceOfGameScene;
 +(GameScene*) sharedGameScene
@@ -60,8 +64,7 @@ static GameScene* instanceOfGameScene;
         
         //@@@初期化処理
         span = 1;
-        timer_span = 10;
-        blockMap = [NSMutableArray array];
+        timer_span = 100;
         
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
@@ -78,30 +81,30 @@ static GameScene* instanceOfGameScene;
         
         //左
         btn_l = [CCMenuItemImage
-                          itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                          itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                                   target:self selector:@selector(controllerTapped:)];
-        btn_l.position = ccp(screenSize.width/5, screenSize.height/4);
+        btn_l.position = ccp(screenSize.width/6, screenSize.height/4);
         
         float btnSizeWidth = btn_l.contentSize.width;
         float btnSizeHeight = btn_l.contentSize.height;
         
         //下
         btn_d = [CCMenuItemImage
-                 itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                 itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                  target:self selector:@selector(controllerTapped:)];
-        btn_d.position = ccp(screenSize.width/5+btnSizeWidth/2, screenSize.height/4-btnSizeHeight);
+        btn_d.position = ccp(screenSize.width/6+btnSizeWidth/2, screenSize.height/4-btnSizeHeight);
         
         //右
         btn_r = [CCMenuItemImage
-                                  itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                                  itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                                   target:self selector:@selector(controllerTapped:)];
-        btn_r.position = ccp(screenSize.width/5+btnSizeWidth, screenSize.height/4);
+        btn_r.position = ccp(screenSize.width/6+btnSizeWidth, screenSize.height/4);
         
         //上
         btn_u = [CCMenuItemImage
-                 itemFromNormalImage:@"joystick-stick.png" selectedImage:@"joystick-sheet.png"
+                 itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                  target:self selector:@selector(controllerTapped:)];
-        btn_u.position = ccp(screenSize.width/5+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
+        btn_u.position = ccp(screenSize.width/6+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
         
         //メニューに追加
         CCMenu *controlMenu = [CCMenu menuWithItems:btn_l,btn_d,btn_r,btn_u, nil];
@@ -114,15 +117,13 @@ static GameScene* instanceOfGameScene;
         NSArray* map = [self loadMap:stageNum];
         
         //マップ描画
-//        spriteBatch = [CCSpriteBatchNode batchNodeWithFile:@"img_20.png"];
-//        [self addChild:spriteBatch z:1 tag:GameSceneNodeTagTreasureSpriteBatch];
+        wallList = [CCSpriteBatchNode batchNodeWithFile:@"atlas_1.png"];
+        [self addChild:wallList z:0 tag:WallTag];
         
         NSString* point;
         for (int i=0; i<MAP_HEIGHT; i++){
             for (int j=0; j<MAP_WIDTH; j++){
                 point = [map objectAtIndex:i*MAP_WIDTH+j];  //i回分WIDTHが回った
-                
-//                NSLog(@"loadMap<%@>",point);
                 
                 //数値に変換
                 int point_coord = [point intValue];
@@ -130,90 +131,65 @@ static GameScene* instanceOfGameScene;
                 if (point_coord==0) {   //何もない空間はエスケープ
                     continue;
                 }
-                else{
-                    NSString* file = [NSString stringWithFormat:@"img_%02d.png",point_coord];
-                    CCSpriteFrame* tmp = [frameCache spriteFrameByName:file];
-                    CCSprite* wall = [CCSprite spriteWithSpriteFrame:tmp];
-                    wall.position = ccp(MAP_OFFSET_X + j * SIZE_TILE, screenSize.height - (MAP_OFFSET_Y + i * SIZE_TILE));
+//                else if(point_coord>0 && point_coord<20){   //未来使用
+//                    NSString* file = [NSString stringWithFormat:@"img_%02d.png",point_coord];
+//                }
+                else if (point_coord>=20){  //20以上は壁
+                    CCSpriteFrame* frm = [frameCache spriteFrameByName:@"img_20.png"];
                     
-//                    [spriteBatch addChild:wall z:1 tag:GameSceneNodeTagTreasureSpriteBatch];
-                    [self addChild:wall z:0 tag:WallTag];
+                    Wall* wall = [Wall initialize:frm];
+                    wall.position = [self convertGridToCcp:j :i];
+                    
+                    [wallList addChild:wall z:0 tag:WallTag];
                 }
             }
         }
-        
+                
         //ブロック生成
-        Player* block_1 = [Player player];
-        block_1.position = ccp(MAP_OFFSET_X + SIZE_TILE, screenSize.height - MAP_OFFSET_Y);
-        [blockMap addObject:block_1];
+//        int grid_x_1 = 1;
+//        int grid_y_1 = 0;
+//        Player* block_1 = [Player initialize:grid_x_1 :grid_y_1];
+//        block_1.position = [self convertGridToCcp:grid_x_1 :grid_y_1];
         
-        NSLog(@"%d",blockMap.count);
-        
-        [self addChild:block_1];
-        
-        [self scheduleUpdate];
-		
-//		// create and initialize a Label
-//		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
-//
-//		// ask director for the window size
-//		CGSize size = [[CCDirector sharedDirector] winSize];
-//	
-//		// position the label on the center of the screen
-//		label.position =  ccp( size.width /2 , size.height/2 );
-//		
-//		// add the label as a child to this Layer
-//		[self addChild: label];
-//		
-//		
-//		
-//		//
-//		// Leaderboards and Achievements
-//		//
-//		
-//		// Default font size will be 28 points.
-//		[CCMenuItemFont setFontSize:28];
-//		
-//		// Achievement Menu Item using blocks
-//		CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
-//			
-//			
-//			GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
-//			achivementViewController.achievementDelegate = self;
-//			
-//			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-//			
-//			[[app navController] presentModalViewController:achivementViewController animated:YES];
-//			
-//			[achivementViewController release];
-//		}
-//									   ];
-//
-//		// Leaderboard Menu Item using blocks
-//		CCMenuItem *itemLeaderboard = [CCMenuItemFont itemWithString:@"Leaderboard" block:^(id sender) {
-//			
-//			
-//			GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
-//			leaderboardViewController.leaderboardDelegate = self;
-//			
-//			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-//			
-//			[[app navController] presentModalViewController:leaderboardViewController animated:YES];
-//			
-//			[leaderboardViewController release];
-//		}
-//									   ];
-//		
-//		CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, nil];
-//		
-//		[menu alignItemsHorizontallyWithPadding:20];
-//		[menu setPosition:ccp( size.width/2, size.height/2 - 50)];
-//		
-//		// Add the menu to the layer
-//		[self addChild:menu];
+        activeBlock = [self createBlock];
 
+        [self addChild:activeBlock z:0 tag:BlockTag];
+        [self scheduleUpdate];
 	}
 	return self;
+}
+
+//ブロック生成処理
+-(Player*)createBlock
+{
+    int grid_x_1 = 1;
+    int grid_y_1 = 0;
+    Player* block_1 = [Player initialize:grid_x_1 :grid_y_1];
+    block_1.position = [self convertGridToCcp:grid_x_1 :grid_y_1];
+    
+    return block_1;
+}
+
+//座標変換(grid→ccp)
+-(CGPoint)convertGridToCcp:(NSInteger)grid_x :(NSInteger)grid_y
+{
+    CGSize screenSize = [[CCDirector sharedDirector] winSize];
+    CGPoint pos = ccp(MAP_OFFSET_X + grid_x * SIZE_TILE, screenSize.height - (MAP_OFFSET_Y + grid_y * SIZE_TILE));
+    return pos;
+}
+
+//座標変換(ccp→grid)
+-(CGPoint)convertCcpToGrid:(NSInteger)pos_x :(NSInteger)pos_y
+{
+    CGSize screenSize = [[CCDirector sharedDirector] winSize];
+    return CGPointMake((pos_x - MAP_OFFSET_X)/SIZE_TILE,(screenSize.height - pos_y - MAP_OFFSET_Y)/SIZE_TILE);
+    
+    //導出過程
+//    pos_x = MAP_OFFSET_X + grid_x * SIZE_TILE;
+//    grid_x = (pos_x - MAP_OFFSET_X)/SIZE_TILE;
+//    
+//    pos_y = screenSize.height - (MAP_OFFSET_Y + grid_y * SIZE_TILE);
+//    grid_y = (screenSize.height - pos_y - MAP_OFFSET_Y)/SIZE_TILE;
 }
 
 //コントローラ
@@ -221,47 +197,59 @@ static GameScene* instanceOfGameScene;
 //    NSLog(@"sender:%d");
     
     CCMenuItemImage* btn = sender;
-    CGPoint distance = CGPointMake(0, 0);
+    int dir = NOP;
     
     if (btn.hash == btn_u.hash) {   //上
-        distance.y = SIZE_TILE;
+        dir = UP;
     }
     else if (btn.hash == btn_l.hash) {   //左
-        distance.x = -SIZE_TILE;
+        dir = LEFT;
     }
     else if (btn.hash == btn_d.hash) {   //下
-        distance.y = -SIZE_TILE;
+        dir = DOWN;
     }
     else if (btn.hash == btn_r.hash) {   //右
-        distance.x = SIZE_TILE;
+        dir = RIGHT;
     }
     
     //移動
-    [self move:distance];
-//    Player* block= [blockMap objectAtIndex:0];
-//    block.position = CGPointMake(block.position.x + distance.x, block.position.y + distance.y);
+    [self move:dir];
 }
 
 //移動メソッド
-//戻り値は移動し続けるかどうか
--(void)move:(CGPoint)distance{
+//移動できなくなった場合、NOを返す
+-(BOOL)move:(int)dir{
     
     //壁と衝突していなければ移動する
+//    Player* block = [self getChildByTag:BlockTag];
     
-    Player* block= [blockMap objectAtIndex:0];
+    //移動方向に向かって１グリッド分移動する
+    int next_grid_x = activeBlock.grid_x_;
+    int next_grid_y = activeBlock.grid_y_;
     
-    if ([self hitCheck:blockMap]) {
-        block.position = CGPointMake(block.position.x + distance.x, block.position.y + distance.y);
-    }else{  //衝突している場合は、ブロック参照用ポインタを空にする
-        [blockMap removeAllObjects];
+    if (dir == LEFT){   //左
+        if (next_grid_x >1) {
+            next_grid_x -= 1;
+            activeBlock.grid_x_ = next_grid_x;
+        }
     }
-}
-
-//衝突判定メソッド
--(BOOL)hitCheck:(NSArray*)blockMap{
-    NSMutableArray* wallArray = [self getChildByTag:WallTag];
-    NSLog(@"wall object:%d", wallArray.count);
+    if (dir == DOWN) {  //下
+        if (next_grid_y <MAP_HEIGHT-2) {
+            next_grid_y += 1;
+            activeBlock.grid_y_ = next_grid_y;
+        }
+        else {
+            return NO;
+        }
+    }
+    else if (dir == RIGHT){ //右
+        if (next_grid_x <MAP_WIDTH-2) {
+            next_grid_x += 1;
+            activeBlock.grid_x_ = next_grid_x;
+        }
+    }
     
+    activeBlock.position = [self convertGridToCcp:activeBlock.grid_x_ :activeBlock.grid_y_];
     return YES;
 }
 
@@ -286,11 +274,13 @@ static GameScene* instanceOfGameScene;
         //        NSLog(@"★★★timer_span[%d]",(int)lifeTime%timer_span);
 //        NSLog(@"★★★span[%lf]",span);
         
-        CGPoint distance = CGPointMake(0, 0);
-        distance.y = -100*delta;
-        
-        [self move:distance];
-//        block_1.position = ccp(block_1.position.x, block_1.position.y - 100  * delta);
+//        Player* block = [self getChildByTag:BlockTag];
+
+        //NOが返ってきたら、新しいブロックを生成する
+        if (![self move:DOWN]) {
+            activeBlock = [self createBlock];
+            [self addChild:activeBlock z:0 tag:BlockTag];
+        }
         
         //規定時間置きに早くなる
         if (currentTime%timer_span == 0) {
@@ -309,7 +299,6 @@ static GameScene* instanceOfGameScene;
     NSString* TextFileName = [NSString stringWithFormat:@"map_%i.txt",stageNum];
     TextFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:TextFileName];
     
-//    NSInteger line_index;
     NSString* file_data;
     
     NSError* is_error = nil;
@@ -320,12 +309,6 @@ static GameScene* instanceOfGameScene;
     // 改行を消して、カンマごとにファイルの内容を分割する
     file_data = [file_data stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     map = [file_data componentsSeparatedByString:@","];
-    
-//    // 分割文字分だけ、繰り返し処理を行います。
-//    for (int i = 0; i < map.count; i++)
-//    {
-//        NSLog(@"data_lines<%@>",[map objectAtIndex:i]);
-//    }
     
     return map;
 }

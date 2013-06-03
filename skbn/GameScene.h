@@ -49,15 +49,10 @@ typedef enum
     CCMenuItemImage* btn_l;
     
     CCSpriteBatchNode* wallList;  //壁
+    NSMutableArray* map;   //描画マップ
     
     //現在操作中のブロックを指すポインタ
     Player* activeBlock;
-//    CCSprite* activeBlock;
-//    Player* activeBlock;
-//    CCNode* activeBlockList;
-//    NSMutableArray* blockMap;
-//    CCSprite* block_1;
-//    CCSprite* block_2;
     
     int displayTime;
     ccTime lifeTime;
@@ -72,5 +67,6 @@ typedef enum
 
 @property (atomic,retain)Player* activeBlock_;
 @property (atomic,retain)CCSpriteBatchNode* wallList_;
+@property (atomic,retain)NSMutableArray* map_;
 
 @end

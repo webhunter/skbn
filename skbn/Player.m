@@ -15,12 +15,12 @@
 @synthesize direct_ = direct;
 @synthesize velocity_=velocity;
 
-+(id) initialize:(NSInteger)g_x :(NSInteger)g_y
++(id) initialize:(int)g_x :(int)g_y
 {
     return [[[self alloc] initObject:g_x :g_y] autorelease];
 }
 
--(id) initObject:(NSInteger)g_x :(NSInteger)g_y
+-(id) initObject:(int)g_x :(int)g_y
 {
     if ((self = [super initWithFile:@"atlas_1.png"]))
 	{

@@ -29,6 +29,7 @@
 
 @synthesize activeBlock_ = activeBlock;
 @synthesize wallList_ = wallList;
+@synthesize map_ = map;
 
 static GameScene* instanceOfGameScene;
 +(GameScene*) sharedGameScene
@@ -113,8 +114,8 @@ static GameScene* instanceOfGameScene;
         [self addChild:controlMenu z:3 tag:ControlUITagGame];
         
         //マップ読み込み
-        NSInteger stageNum = 1;
-        NSArray* map = [self loadMap:stageNum];
+        int stageNum = 1;
+        map = [self loadMap:map :stageNum];
         
         //マップ描画
         wallList = [CCSpriteBatchNode batchNodeWithFile:@"atlas_1.png"];
@@ -123,18 +124,19 @@ static GameScene* instanceOfGameScene;
         NSString* point;
         for (int i=0; i<MAP_HEIGHT; i++){
             for (int j=0; j<MAP_WIDTH; j++){
-                point = [map objectAtIndex:i*MAP_WIDTH+j];  //i回分WIDTHが回った
+                //マップから該当する座標のオブジェクト種類を取得する
+                point = [map objectAtIndex:[self convertGridToMap:j :i]];
                 
                 //数値に変換
                 int point_coord = [point intValue];
                 
-                if (point_coord==0) {   //何もない空間はエスケープ
+                if (point_coord == EMPTY) {   //何もない空間はエスケープ
                     continue;
                 }
 //                else if(point_coord>0 && point_coord<20){   //未来使用
 //                    NSString* file = [NSString stringWithFormat:@"img_%02d.png",point_coord];
 //                }
-                else if (point_coord>=20){  //20以上は壁
+                else if (point_coord == WALL){  //壁
                     CCSpriteFrame* frm = [frameCache spriteFrameByName:@"img_20.png"];
                     
                     Wall* wall = [Wall initialize:frm];
@@ -170,16 +172,22 @@ static GameScene* instanceOfGameScene;
     return block_1;
 }
 
-//座標変換(grid→ccp)
--(CGPoint)convertGridToCcp:(NSInteger)grid_x :(NSInteger)grid_y
+//座標変換(grid->map)
+-(int)convertGridToMap:(int)grid_x :(int)grid_y
+{
+    return MAP_WIDTH * grid_y + grid_x;   //i回分WIDTHが回った
+}
+
+//座標変換(grid->ccp)
+-(CGPoint)convertGridToCcp:(int)grid_x :(int)grid_y
 {
     CGSize screenSize = [[CCDirector sharedDirector] winSize];
     CGPoint pos = ccp(MAP_OFFSET_X + grid_x * SIZE_TILE, screenSize.height - (MAP_OFFSET_Y + grid_y * SIZE_TILE));
     return pos;
 }
 
-//座標変換(ccp→grid)
--(CGPoint)convertCcpToGrid:(NSInteger)pos_x :(NSInteger)pos_y
+//座標変換(ccp->grid)
+-(CGPoint)convertCcpToGrid:(int)pos_x :(int)pos_y
 {
     CGSize screenSize = [[CCDirector sharedDirector] winSize];
     return CGPointMake((pos_x - MAP_OFFSET_X)/SIZE_TILE,(screenSize.height - pos_y - MAP_OFFSET_Y)/SIZE_TILE);
@@ -217,21 +225,23 @@ static GameScene* instanceOfGameScene;
 }
 
 //移動メソッド
-//移動できなくなった場合、NOを返す
 -(BOOL)move:(int)dir{
-    
-    //壁と衝突していなければ移動する
-//    Player* block = [self getChildByTag:BlockTag];
-    
+       
     //移動方向に向かって１グリッド分移動する
     int next_grid_x = activeBlock.grid_x_;
     int next_grid_y = activeBlock.grid_y_;
     
+    //移動先を調査
     if (dir == LEFT){   //左
-        if (next_grid_x >1) {
-            next_grid_x -= 1;
+        next_grid_x -= 1;
+        
+        if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
             activeBlock.grid_x_ = next_grid_x;
         }
+//        if (next_grid_x >1) {
+//            
+//            
+//        }
     }
     if (dir == DOWN) {  //下
         if (next_grid_y <MAP_HEIGHT-2) {
@@ -239,6 +249,13 @@ static GameScene* instanceOfGameScene;
             activeBlock.grid_y_ = next_grid_y;
         }
         else {
+            //移動できなくなった場合、マップを更新してNOを返す
+            int replaceIdx = [self convertGridToMap:next_grid_x :next_grid_y];
+            NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
+            
+//            NSLog(@"@@@%@",setValue);
+            
+            [map replaceObjectAtIndex:replaceIdx withObject:setValue];
             return NO;
         }
     }
@@ -251,6 +268,22 @@ static GameScene* instanceOfGameScene;
     
     activeBlock.position = [self convertGridToCcp:activeBlock.grid_x_ :activeBlock.grid_y_];
     return YES;
+}
+
+//指定した座標がEMPTYかどうかを調べる
+-(BOOL)isEmptyBlock:(int)grid_x :(int)grid_y
+{
+    int checkIdx = [self convertGridToMap:grid_x :grid_y];
+    NSString* checkPoint = [map objectAtIndex:checkIdx];
+    int checkPoint_i= [checkPoint intValue];
+    
+    if (checkPoint_i == EMPTY) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+    
 }
 
 //更新するタイミングを取得する
@@ -290,9 +323,9 @@ static GameScene* instanceOfGameScene;
 }
 
 //マップロード処理
-- (NSArray*)loadMap:(NSInteger)stageNum{
+- (NSMutableArray*)loadMap:(NSMutableArray*)fmap :(int)stageNum{
     
-    NSArray* map;
+    NSArray* map_tmp;
     
     //file read
     NSString* TextFilePath;
@@ -308,9 +341,10 @@ static GameScene* instanceOfGameScene;
     
     // 改行を消して、カンマごとにファイルの内容を分割する
     file_data = [file_data stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    map = [file_data componentsSeparatedByString:@","];
+    map_tmp = [file_data componentsSeparatedByString:@","];
     
-    return map;
+    //Array->MutableArray copy
+    return [map_tmp mutableCopy];
 }
 
 // on "dealloc" you need to release all your retained objects

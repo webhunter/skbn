@@ -10,18 +10,18 @@
 #import "cocos2d.h"
 
 @interface Player : CCSprite {
-    NSInteger direct;
-    NSInteger grid_x;
-    NSInteger grid_y;
+    int direct;
+    int grid_x;
+    int grid_y;
 }
 
-@property (nonatomic)NSInteger direct_;
-@property (nonatomic)NSInteger grid_x_;
-@property (nonatomic)NSInteger grid_y_;
+@property (nonatomic)int direct_;
+@property (nonatomic)int grid_x_;
+@property (nonatomic)int grid_y_;
 
 
-+(id) initialize:(NSInteger)g_x :(NSInteger)g_y;
--(id) initObject:(NSInteger)g_x :(NSInteger)g_y;
++(id) initialize:(int)g_x :(int)g_y;
+-(id) initObject:(int)g_x :(int)g_y;
 
 @property CGPoint velocity_;
 

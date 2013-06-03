@@ -32,4 +32,10 @@
 #define MAP_OFFSET_X 180
 #define MAP_OFFSET_Y 30
 
+//フィールド上のオブジェクト
+#define EMPTY 0
+#define BLOCK_ACTIVE 1
+#define BLOCK_STAY 10
+#define WALL 20
+
 #endif // __GAME_CONFIG_H

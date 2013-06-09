@@ -27,6 +27,7 @@
 // GameScene implementation
 @implementation GameScene
 
+@synthesize block_range_ = block_range;
 @synthesize activeBlock_ = activeBlock;
 @synthesize wallList_ = wallList;
 @synthesize map_ = map;
@@ -66,6 +67,7 @@ static GameScene* instanceOfGameScene;
         //@@@初期化処理
         span = 1;
         timer_span = 100;
+        block_range = 5;
         
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
@@ -148,12 +150,7 @@ static GameScene* instanceOfGameScene;
         }
                 
         //ブロック生成
-//        int grid_x_1 = 1;
-//        int grid_y_1 = 0;
-//        Player* block_1 = [Player initialize:grid_x_1 :grid_y_1];
-//        block_1.position = [self convertGridToCcp:grid_x_1 :grid_y_1];
-        
-        activeBlock = [self createBlock];
+        activeBlock = [self createBlock:block_range];
 
         [self addChild:activeBlock z:0 tag:BlockTag];
         [self scheduleUpdate];
@@ -162,11 +159,11 @@ static GameScene* instanceOfGameScene;
 }
 
 //ブロック生成処理
--(Player*)createBlock
+-(Player*)createBlock:(int)range
 {
     int grid_x_1 = 1;
     int grid_y_1 = 0;
-    Player* block_1 = [Player initialize:grid_x_1 :grid_y_1];
+    Player* block_1 = [Player initialize:grid_x_1 :grid_y_1 :range];
     block_1.position = [self convertGridToCcp:grid_x_1 :grid_y_1];
     
     return block_1;
@@ -312,7 +309,7 @@ static GameScene* instanceOfGameScene;
 
         //NOが返ってきたら、新しいブロックを生成する
         if (![self move:DOWN]) {
-            activeBlock = [self createBlock];
+            activeBlock = [self createBlock:self.block_range_];
             [self addChild:activeBlock z:0 tag:BlockTag];
         }
         

@@ -59,12 +59,14 @@ typedef enum
     
     float span; //オブジェクトの更新タイミング
     int timer_span;   //更新時間を早めるタイミング
+    int block_range;    //ブロックの種類数
 }
 
 // returns a CCScene that contains the GameScene as the only child
 +(CCScene *) scene;
 +(GameScene*) sharedGameScene;
 
+@property (nonatomic)int block_range_;
 @property (atomic,retain)Player* activeBlock_;
 @property (atomic,retain)CCSpriteBatchNode* wallList_;
 @property (atomic,retain)NSMutableArray* map_;

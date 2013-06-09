@@ -15,14 +15,18 @@
 @synthesize direct_ = direct;
 @synthesize velocity_=velocity;
 
-+(id) initialize:(int)g_x :(int)g_y
++(id) initialize:(int)g_x :(int)g_y :(int)range
 {
-    return [[[self alloc] initObject:g_x :g_y] autorelease];
+    return [[[self alloc] initObject:g_x :g_y :range] autorelease];
 }
 
--(id) initObject:(int)g_x :(int)g_y
+-(id) initObject:(int)g_x :(int)g_y :(int)range
 {
-    if ((self = [super initWithFile:@"atlas_1.png"]))
+    //rangeの範囲で乱数を振り出し、画像をセットする
+    int color_rand = rand()%range+1;
+    NSString* file = [NSString stringWithFormat:@"img_%02d.png",color_rand];
+    
+    if ((self = [super initWithSpriteFrameName:file]))
 	{
         //座標初期化
         grid_x = g_x;
@@ -32,25 +36,27 @@
         self.velocity_ = ccp(0,1);
         
         //キャッシュを読み込み
-        CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+//        CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
         
-        NSMutableArray* frames = [NSMutableArray arrayWithCapacity:9];
-        for (int i=5; i<9; i++){
-            NSString* file = [NSString stringWithFormat:@"img_%02d.png",i];
-            
-            //[CCSprite spriteWithSpriteFrame:frm];
-            CCSpriteFrame* frame = [frameCache spriteFrameByName:file];
-            [frames addObject:frame];
-        }
         
-        //すべてのスプライトアニメーションフレームからアニメーションオブジェクトを生成する。
-        CCAnimation *anim = [[[CCAnimation alloc] initWithSpriteFrames:frames delay:1] autorelease];
         
-        //アニメーション実行
-        CCAnimate* animate = [CCAnimate actionWithAnimation:anim];
-        CCRepeatForever* repeat = [CCRepeatForever actionWithAction:animate];
-        
-        [self runAction:repeat];
+//        NSMutableArray* frames = [NSMutableArray arrayWithCapacity:9];
+//        for (int i=5; i<9; i++){
+//            NSString* file = [NSString stringWithFormat:@"img_%02d.png",i];
+//            
+//            //[CCSprite spriteWithSpriteFrame:frm];
+//            CCSpriteFrame* frame = [frameCache spriteFrameByName:file];
+//            [frames addObject:frame];
+//        }
+//        
+//        //すべてのスプライトアニメーションフレームからアニメーションオブジェクトを生成する。
+//        CCAnimation *anim = [[[CCAnimation alloc] initWithSpriteFrames:frames delay:1] autorelease];
+//        
+//        //アニメーション実行
+//        CCAnimate* animate = [CCAnimate actionWithAnimation:anim];
+//        CCRepeatForever* repeat = [CCRepeatForever actionWithAction:animate];
+//        
+//        [self runAction:repeat];
         
         [self scheduleUpdate];
     }

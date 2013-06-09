@@ -20,8 +20,8 @@
 @property (nonatomic)int grid_y_;
 
 
-+(id) initialize:(int)g_x :(int)g_y;
--(id) initObject:(int)g_x :(int)g_y;
++(id) initialize:(int)g_x :(int)g_y :(int)range;
+-(id) initObject:(int)g_x :(int)g_y :(int)range;
 
 @property CGPoint velocity_;
 

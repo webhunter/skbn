@@ -238,31 +238,28 @@ static GameScene* instanceOfGameScene;
         if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
             activeBlock.grid_x_ = next_grid_x;
         }
-//        if (next_grid_x >1) {
-//            
-//            
-//        }
     }
-    if (dir == DOWN) {  //下
-        if (next_grid_y <MAP_HEIGHT-2) {
-            next_grid_y += 1;
+    else if (dir == RIGHT){ //右
+        next_grid_x += 1;
+        
+        if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
+            activeBlock.grid_x_ = next_grid_x;
+        }
+    }
+    else if (dir == DOWN) {  //下
+        next_grid_y += 1;
+        
+        if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
             activeBlock.grid_y_ = next_grid_y;
         }
-        else {
-            //移動できなくなった場合、マップを更新してNOを返す
-            int replaceIdx = [self convertGridToMap:next_grid_x :next_grid_y];
-            NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
+        else{
             
-//            NSLog(@"@@@%@",setValue);
+            //移動できなくなった場合、マップを更新してNOを返す
+            int replaceIdx = [self convertGridToMap:activeBlock.grid_x_ :activeBlock.grid_y_];
+            NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
             
             [map replaceObjectAtIndex:replaceIdx withObject:setValue];
             return NO;
-        }
-    }
-    else if (dir == RIGHT){ //右
-        if (next_grid_x <MAP_WIDTH-2) {
-            next_grid_x += 1;
-            activeBlock.grid_x_ = next_grid_x;
         }
     }
     
@@ -277,10 +274,14 @@ static GameScene* instanceOfGameScene;
     NSString* checkPoint = [map objectAtIndex:checkIdx];
     int checkPoint_i= [checkPoint intValue];
     
+    NSLog(@"【%@】【%d】",checkPoint,checkPoint_i);
+    
     if (checkPoint_i == EMPTY) {
+//        NSLog(@"empty【yes】");
         return YES;
     }
     else {
+//        NSLog(@"empty【no】");
         return NO;
     }
     

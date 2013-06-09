@@ -39,9 +39,9 @@
 #define WALL 20
 
 //ブロック定義
-#define BLOCK1_DEFAULT_X 1
-#define BLOCK1_DEFAULT_Y 0
-#define BLOCK2_DEFAULT_X 1
+#define BLOCK1_DEFAULT_X 2
+#define BLOCK1_DEFAULT_Y 1
+#define BLOCK2_DEFAULT_X 3
 #define BLOCK2_DEFAULT_Y 1
 
 #endif // __GAME_CONFIG_H

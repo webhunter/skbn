@@ -29,6 +29,7 @@
 
 @synthesize block_range_ = block_range;
 @synthesize activeBlock_ = activeBlock;
+@synthesize activeBlock2_ = activeBlock2;
 @synthesize wallList_ = wallList;
 @synthesize map_ = map;
 
@@ -150,23 +151,42 @@ static GameScene* instanceOfGameScene;
         }
                 
         //ブロック生成
-        activeBlock = [self createBlock:block_range];
-
+        activeBlock = [self createBlock:block_range :1];
         [self addChild:activeBlock z:0 tag:BlockTag];
+        
+        activeBlock2 = [self createBlock:block_range :2];
+        [self addChild:activeBlock2 z:0 tag:BlockTag];
+
         [self scheduleUpdate];
 	}
 	return self;
 }
 
 //ブロック生成処理
--(Player*)createBlock:(int)range
+-(Player*)createBlock:(int)range :(int)rank
 {
-    int grid_x_1 = 1;
-    int grid_y_1 = 0;
-    Player* block_1 = [Player initialize:grid_x_1 :grid_y_1 :range];
-    block_1.position = [self convertGridToCcp:grid_x_1 :grid_y_1];
+    int grid_x,grid_y=0;
     
-    return block_1;
+    if (rank == 1) {
+        grid_x = BLOCK1_DEFAULT_X;
+        grid_y = BLOCK1_DEFAULT_Y;
+    }
+    else{
+        grid_x = BLOCK2_DEFAULT_X;
+        grid_y = BLOCK2_DEFAULT_Y;
+    }
+    
+    Player* block = [Player initialize:grid_x :grid_y :range];
+    
+    //グリッド座標更新
+    NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_ACTIVE];
+    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
+    
+    //実座標更新
+    block.position = [self convertGridToCcp:grid_x :grid_y];
+    
+    return block;
 }
 
 //座標変換(grid->map)
@@ -218,60 +238,117 @@ static GameScene* instanceOfGameScene;
     }
     
     //移動
-    [self move:dir];
+    [self move:activeBlock: dir];
+    [self move:activeBlock2 :dir];
+}
+
+//ブロック移動メソッド
+-(BOOL)moveBlock{
+    
+    //最初にプライマリを移動する
+    //プライマリの座標が決まったら、スレーブを移動する
+    return YES;
+}
+
+//プライマリとセカンダリで、進行方向に対して前方に存在するブロックパーツを返す
+-(Player*)fowardCheck:(int)dir{
+    
+    Player* fowardInstance = activeBlock;
+    
+    //移動先を調査
+    if (dir == LEFT){   //左
+        if (activeBlock.grid_x_ < activeBlock2.grid_x_) {   //セカンダリが左にある時のみセカンダリ前方
+            fowardInstance = activeBlock2;
+        }
+    }
+    else if (dir == RIGHT){ //右
+    }
+    else if (dir == DOWN) {  //下
+        if (activeBlock.grid_y_ < activeBlock2.grid_y_) {   //セカンダリが下にある時のみセカンダリ前方
+            fowardInstance = activeBlock2;
+        }
+    }
+    return fowardInstance;
 }
 
 //移動メソッド
--(BOOL)move:(int)dir{
-       
-    //移動方向に向かって１グリッド分移動する
-    int next_grid_x = activeBlock.grid_x_;
-    int next_grid_y = activeBlock.grid_y_;
+-(BOOL)move:(Player*)block :(int)dir{
     
-    //移動先を調査
+    //現在のグリッド座標の状態取得
+    int nowIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+    int nowState= [self getGridState:block.grid_x_ :block.grid_y_];
+    
+    //STAY状態の場合、終了
+    if (nowState == BLOCK_STAY) {
+        return NO;
+    }
+
+    //座標更新のために現在のグリッド座標の状態をEMPTYに戻す
+    [map replaceObjectAtIndex:nowIdx withObject:[NSString stringWithFormat:@"%02d",EMPTY]];
+    
+    //移動継続フラグ
+    BOOL canmove = YES;
+    
+    int next_grid_x = block.grid_x_;
+    int next_grid_y = block.grid_y_;
+    
+    //ブロックの状態
+    NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_ACTIVE];
+    
+    //移動先を調査して、移動可能な場合、１グリッド分移動する
     if (dir == LEFT){   //左
         next_grid_x -= 1;
         
         if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
-            activeBlock.grid_x_ = next_grid_x;
+            block.grid_x_ = next_grid_x;
         }
     }
     else if (dir == RIGHT){ //右
         next_grid_x += 1;
         
         if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
-            activeBlock.grid_x_ = next_grid_x;
+            block.grid_x_ = next_grid_x;
         }
     }
     else if (dir == DOWN) {  //下
         next_grid_y += 1;
         
         if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
-            activeBlock.grid_y_ = next_grid_y;
+            block.grid_y_ = next_grid_y;
         }
         else{
-            
-            //移動できなくなった場合、マップを更新してNOを返す
-            int replaceIdx = [self convertGridToMap:activeBlock.grid_x_ :activeBlock.grid_y_];
-            NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
-            
-            [map replaceObjectAtIndex:replaceIdx withObject:setValue];
-            return NO;
+            //移動できなくなった場合、ブロックの状態をSTAYにする
+            setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
+            canmove = NO;
         }
     }
     
-    activeBlock.position = [self convertGridToCcp:activeBlock.grid_x_ :activeBlock.grid_y_];
-    return YES;
+    //グリッド座標を更新する
+    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
+    
+    //ブロックピースの移動
+    block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
+    
+    return canmove;
+}
+
+//指定したグリッド座標の状態を取得する
+-(int)getGridState:(int)grid_x :(int)grid_y
+{
+    int checkIdx = [self convertGridToMap:grid_x :grid_y];
+    NSString* checkPoint = [map objectAtIndex:checkIdx];
+    return [checkPoint intValue];
 }
 
 //指定した座標がEMPTYかどうかを調べる
 -(BOOL)isEmptyBlock:(int)grid_x :(int)grid_y
 {
-    int checkIdx = [self convertGridToMap:grid_x :grid_y];
-    NSString* checkPoint = [map objectAtIndex:checkIdx];
-    int checkPoint_i= [checkPoint intValue];
+//    int checkIdx = [self convertGridToMap:grid_x :grid_y];
+//    NSString* checkPoint = [map objectAtIndex:checkIdx];
+    int checkPoint_i= [self getGridState:grid_x :grid_y];
     
-    NSLog(@"【%@】【%d】",checkPoint,checkPoint_i);
+//    NSLog(@"【%@】【%d】",checkPoint,checkPoint_i);
     
     if (checkPoint_i == EMPTY) {
 //        NSLog(@"empty【yes】");
@@ -281,8 +358,11 @@ static GameScene* instanceOfGameScene;
 //        NSLog(@"empty【no】");
         return NO;
     }
-    
 }
+
+//アクティブ状態のブロックを調べる
+//-(int)getActiveBlock{
+//}
 
 //更新するタイミングを取得する
 -(int)getMoveTime:(float)span{
@@ -305,13 +385,35 @@ static GameScene* instanceOfGameScene;
         //        NSLog(@"★★★timer_span[%d]",(int)lifeTime%timer_span);
 //        NSLog(@"★★★span[%lf]",span);
         
-//        Player* block = [self getChildByTag:BlockTag];
-
-        //NOが返ってきたら、新しいブロックを生成する
-        if (![self move:DOWN]) {
-            activeBlock = [self createBlock:self.block_range_];
+        //いずれかのブロックピースがSTAY状態になったら、もう片方のブロックピースを底面まで移動させる
+        if (!([self move:activeBlock :DOWN]&[self move:activeBlock2 :DOWN])){
+            while (YES) {
+                if (![self move:activeBlock :DOWN]) {
+                    break;
+                }
+            }
+            while (YES) {
+                if (![self move:activeBlock2 :DOWN]) {
+                    break;
+                }
+            }
+            
+            //新しいブロック生成
+            activeBlock = [self createBlock:self.block_range_ :1];
             [self addChild:activeBlock z:0 tag:BlockTag];
+            
+            activeBlock2 = [self createBlock:self.block_range_ :2];
+            [self addChild:activeBlock2 z:0 tag:BlockTag];
         }
+
+        //全てのブロックピースからNOが返ってきたら、新しいブロックを生成する
+//        if (![self move:activeBlock :DOWN]) {
+//            activeBlock = [self createBlock:self.block_range_ :1];
+//            [self addChild:activeBlock z:0 tag:BlockTag];
+//            
+//            activeBlock2 = [self createBlock:self.block_range_ :2];
+//            [self addChild:activeBlock2 z:0 tag:BlockTag];
+//        }
         
         //規定時間置きに早くなる
         if (currentTime%timer_span == 0) {

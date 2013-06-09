@@ -53,6 +53,7 @@ typedef enum
     
     //現在操作中のブロックを指すポインタ
     Player* activeBlock;
+    Player* activeBlock2;
     
     int displayTime;
     ccTime lifeTime;
@@ -68,6 +69,7 @@ typedef enum
 
 @property (nonatomic)int block_range_;
 @property (atomic,retain)Player* activeBlock_;
+@property (atomic,retain)Player* activeBlock2_;
 @property (atomic,retain)CCSpriteBatchNode* wallList_;
 @property (atomic,retain)NSMutableArray* map_;
 

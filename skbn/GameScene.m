@@ -238,8 +238,11 @@ static GameScene* instanceOfGameScene;
     }
     
     //移動
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0.7];
     [self move:activeBlock: dir];
     [self move:activeBlock2 :dir];
+    [CATransaction commit];
 }
 
 //ブロック移動メソッド
@@ -344,25 +347,15 @@ static GameScene* instanceOfGameScene;
 //指定した座標がEMPTYかどうかを調べる
 -(BOOL)isEmptyBlock:(int)grid_x :(int)grid_y
 {
-//    int checkIdx = [self convertGridToMap:grid_x :grid_y];
-//    NSString* checkPoint = [map objectAtIndex:checkIdx];
     int checkPoint_i= [self getGridState:grid_x :grid_y];
     
-//    NSLog(@"【%@】【%d】",checkPoint,checkPoint_i);
-    
     if (checkPoint_i == EMPTY) {
-//        NSLog(@"empty【yes】");
         return YES;
     }
     else {
-//        NSLog(@"empty【no】");
         return NO;
     }
 }
-
-//アクティブ状態のブロックを調べる
-//-(int)getActiveBlock{
-//}
 
 //更新するタイミングを取得する
 -(int)getMoveTime:(float)span{
@@ -405,15 +398,6 @@ static GameScene* instanceOfGameScene;
             activeBlock2 = [self createBlock:self.block_range_ :2];
             [self addChild:activeBlock2 z:0 tag:BlockTag];
         }
-
-        //全てのブロックピースからNOが返ってきたら、新しいブロックを生成する
-//        if (![self move:activeBlock :DOWN]) {
-//            activeBlock = [self createBlock:self.block_range_ :1];
-//            [self addChild:activeBlock z:0 tag:BlockTag];
-//            
-//            activeBlock2 = [self createBlock:self.block_range_ :2];
-//            [self addChild:activeBlock2 z:0 tag:BlockTag];
-//        }
         
         //規定時間置きに早くなる
         if (currentTime%timer_span == 0) {

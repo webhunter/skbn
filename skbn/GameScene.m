@@ -32,6 +32,8 @@
 @synthesize activeBlock2_ = activeBlock2;
 @synthesize wallList_ = wallList;
 @synthesize map_ = map;
+@synthesize map_offset_x_ = map_offset_x;
+@synthesize map_offset_y_ = map_offset_y;
 
 static GameScene* instanceOfGameScene;
 +(GameScene*) sharedGameScene
@@ -72,6 +74,10 @@ static GameScene* instanceOfGameScene;
         
         CGSize screenSize = [[CCDirector sharedDirector] winSize];
         
+        //MAPオフセット
+        map_offset_x = screenSize.width/3;
+        map_offset_y = screenSize.height/9;
+        
         //タッチイベント
         self.isTouchEnabled = YES;
         
@@ -87,7 +93,7 @@ static GameScene* instanceOfGameScene;
         btn_l = [CCMenuItemImage
                           itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                                   target:self selector:@selector(controllerTapped:)];
-        btn_l.position = ccp(screenSize.width/6, screenSize.height/4);
+        btn_l.position = ccp(screenSize.width/9, screenSize.height/4);
         
         float btnSizeWidth = btn_l.contentSize.width;
         float btnSizeHeight = btn_l.contentSize.height;
@@ -96,28 +102,34 @@ static GameScene* instanceOfGameScene;
         btn_d = [CCMenuItemImage
                  itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                  target:self selector:@selector(controllerTapped:)];
-        btn_d.position = ccp(screenSize.width/6+btnSizeWidth/2, screenSize.height/4-btnSizeHeight);
+        btn_d.position = ccp(screenSize.width/9+btnSizeWidth/2, screenSize.height/4-btnSizeHeight);
         
         //右
         btn_r = [CCMenuItemImage
                                   itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                                   target:self selector:@selector(controllerTapped:)];
-        btn_r.position = ccp(screenSize.width/6+btnSizeWidth, screenSize.height/4);
+        btn_r.position = ccp(screenSize.width/9+btnSizeWidth, screenSize.height/4);
         
         //上
         btn_u = [CCMenuItemImage
                  itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                  target:self selector:@selector(controllerTapped:)];
-        btn_u.position = ccp(screenSize.width/6+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
+        btn_u.position = ccp(screenSize.width/9+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
         
         //Aボタン
         btn_a = [CCMenuItemImage
                  itemFromNormalImage:@"gls_red_up.png" selectedImage:@"gls_red_down.png"
-                 target:self selector:@selector(controllerTapped:)];
-        btn_a.position = ccp(screenSize.width/6*5+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
+                 target:self selector:@selector(controllerTapped_rotation:)];
+        btn_a.position = ccp(screenSize.width/9*7+btnSizeWidth/2, screenSize.height/4);
+        
+        //Bボタン
+        btn_b = [CCMenuItemImage
+                 itemFromNormalImage:@"gls_green_up.png" selectedImage:@"gls_green_down.png"
+                 target:self selector:@selector(controllerTapped_rotation:)];
+        btn_b.position = ccp(screenSize.width/9*7+btnSizeWidth/2*3, screenSize.height/4);
         
         //メニューに追加
-        CCMenu *controlMenu = [CCMenu menuWithItems:btn_l,btn_d,btn_r,btn_u,btn_a, nil];
+        CCMenu *controlMenu = [CCMenu menuWithItems:btn_l,btn_d,btn_r,btn_u,btn_a,btn_b, nil];
         
         controlMenu.position = CGPointZero;
         [self addChild:controlMenu z:3 tag:ControlUITagGame];
@@ -205,7 +217,7 @@ static GameScene* instanceOfGameScene;
 -(CGPoint)convertGridToCcp:(int)grid_x :(int)grid_y
 {
     CGSize screenSize = [[CCDirector sharedDirector] winSize];
-    CGPoint pos = ccp(MAP_OFFSET_X + grid_x * SIZE_TILE, screenSize.height - (MAP_OFFSET_Y + grid_y * SIZE_TILE));
+    CGPoint pos = ccp(self.map_offset_x_ + grid_x * SIZE_TILE, screenSize.height - (self.map_offset_y_ + grid_y * SIZE_TILE));
     return pos;
 }
 
@@ -213,7 +225,7 @@ static GameScene* instanceOfGameScene;
 -(CGPoint)convertCcpToGrid:(int)pos_x :(int)pos_y
 {
     CGSize screenSize = [[CCDirector sharedDirector] winSize];
-    return CGPointMake((pos_x - MAP_OFFSET_X)/SIZE_TILE,(screenSize.height - pos_y - MAP_OFFSET_Y)/SIZE_TILE);
+    return CGPointMake((pos_x - self.map_offset_x_)/SIZE_TILE,(screenSize.height - pos_y - self.map_offset_y_)/SIZE_TILE);
     
     //導出過程
 //    pos_x = MAP_OFFSET_X + grid_x * SIZE_TILE;
@@ -242,31 +254,32 @@ static GameScene* instanceOfGameScene;
     else if (btn.hash == btn_r.hash) {   //右
         dir = RIGHT;
     }
-    else if (btn.hash == btn_a.hash) {   //左回転
-        dir = TURN_LEFT;
-    }
-    else if (btn.hash == btn_b.hash) {   //右回転
-        dir = TURN_RIGHT;
-    }
     
     //移動
-    
     //移動方向に対して前方にあるブロックユニットを取得する
-    NSMutableArray* moveMap = [self fowardCheck:dir];
+    NSMutableArray* forwardMap = [self fowardCheck:dir];
     
     //前方にある方から移動する
-    for (int i=0; i<moveMap.count; i++) {
-        Player* pl = [moveMap objectAtIndex:i];
+    for (int i=0; i<forwardMap.count; i++) {
+        Player* pl = [forwardMap objectAtIndex:i];
         [self move:pl :dir];
     }
 }
 
-//ブロック移動メソッド
--(BOOL)moveBlock{
+//コントローラー・ブロック回転
+- (void)controllerTapped_rotation:(id)sender{
+    CCMenuItemImage* btn = sender;
+    int dir = NOP;
     
-    //最初にプライマリを移動する
-    //プライマリの座標が決まったら、スレーブを移動する
-    return YES;
+    if (btn.hash == btn_a.hash) {   //左回転
+        dir = ROT_LEFT;
+    }
+    else if (btn.hash == btn_b.hash) {   //右回転
+        dir = ROT_RIGHT;
+    }
+    
+    //セカンダリブロックユニットを回転させる
+    [self rotation:activeBlock2 :dir :activeBlock.grid_x_ :activeBlock.grid_y_];
 }
 
 //進行方向に対して前方に存在するブロックパーツを判別する
@@ -308,18 +321,93 @@ static GameScene* instanceOfGameScene;
     return moveSequenceMap;
 }
 
+-(BOOL)rotation:(Player*)block :(int)dir :(int)center_x :(int)center_y{
+    
+    //現在のグリッド座標の状態取得
+    int nowIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+    int nowState= [self getGridState:block.grid_x_ :block.grid_y_];
+    
+    //STAY状態の場合、終了
+    if (nowState == BLOCK_STAY) {
+        return NO;
+    }
+    
+    //座標更新のために現在のグリッド座標の状態をEMPTYに戻す
+    [map replaceObjectAtIndex:nowIdx withObject:[NSString stringWithFormat:@"%02d",EMPTY]];
+    
+    //移動継続フラグ(座標的に移動可能かどうかを判別するフラグ)
+    BOOL wall_check = YES;
+    
+    double next_radian = block.radian_;
+    
+    //ブロックの状態
+    NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_ACTIVE];
+    
+    if (dir == ROT_LEFT){   //左回転
+        next_radian = M_PI_2;
+    }
+    else if (dir == ROT_RIGHT){ //右回転
+        next_radian = -M_PI_2;
+    }
+    
+    //移動先を調査して、移動可能な場合、回転する
+    NSMutableArray* coor = [self gridRotate:block.grid_x_ :block.grid_y_ :next_radian :center_x :center_y];
+    
+    int next_grid_x = [[coor objectAtIndex:0] intValue];
+    int next_grid_y = [[coor objectAtIndex:1] intValue];
+    
+    NSLog(@"@@@【%d】【%d】",next_grid_x, next_grid_y);
+    
+    if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
+        block.grid_x_ = next_grid_x;
+        block.grid_y_ = next_grid_y;
+        block.radian_ = next_radian;
+    }
+    
+    //グリッド座標を更新する
+    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
+    
+    //ブロックピースの移動
+    block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
+    
+    return wall_check;
+}
+
+//グリッド座標回転
+-(NSMutableArray*)gridRotate:(int)grid_x :(int)grid_y :(double)radian :(int)center_x :(int)center_y
+{
+    NSMutableArray* coordinate = [NSMutableArray arrayWithCapacity:2];
+    
+    //x座標回転
+    double elem_1 = cos(radian);
+    double elem_2 = sin(radian);
+    
+//    NSLog(@"@@@grid_x:【%d】", grid_x);
+//    NSLog(@"@@@grid_y:【%d】", grid_y);
+//    
+//    NSLog(@"@@@center_x:【%d】", center_x);
+//    NSLog(@"@@@center_y:【%d】", center_y);
+    
+    int rotate_grid_x = elem_1 * (grid_x-center_x) - elem_2 * (grid_y-center_y) + center_x;
+    int rotate_grid_y = elem_2 * (grid_x-center_x) + elem_1 * (grid_y-center_y) + center_y;
+    
+//    NSLog(@"@@@rotate_grid_x:【%d】", rotate_grid_x);
+//    NSLog(@"@@@rotate_grid_y:【%d】", rotate_grid_y);
+    
+    NSNumber *x = [[NSNumber alloc] initWithInt:rotate_grid_x];
+    NSNumber *y = [[NSNumber alloc] initWithInt:rotate_grid_y];
+    
+    //x,yの順番で格納
+    [coordinate addObject:x];
+    [coordinate addObject:y];
+    
+    return coordinate;
+}
+
 //移動メソッド
 -(BOOL)move:(Player*)block :(int)dir{
-    
-    //ブロックが移動中の場合、処理を抜ける
-//    if (block.move_state_ == NO) {
-//        NSLog(@"@@@move block");
-//        return YES;
-//    }
-//    
-//    //移動可能フラグをブロックモードにする
-//    block.move_state_ = NO;
-    
+        
     //現在のグリッド座標の状態取得
     int nowIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
     int nowState= [self getGridState:block.grid_x_ :block.grid_y_];
@@ -375,10 +463,7 @@ static GameScene* instanceOfGameScene;
     
     //ブロックピースの移動
     block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
-    
-    //移動が終了したのでブロックモード解除
-//    block.move_state_ = YES;
-    
+        
     return wall_check;
 }
 
@@ -420,12 +505,23 @@ static GameScene* instanceOfGameScene;
     if (displayTime < currentTime) {
         displayTime = currentTime;
         
-//        NSLog(@"★★★GameScene:update[%i]",currentTime);
-        //        NSLog(@"★★★timer_span[%d]",(int)lifeTime%timer_span);
-//        NSLog(@"★★★span[%lf]",span);
+        //移動
+        //移動方向に対して前方にあるブロックユニットを取得する
+        NSMutableArray* forwardMap = [self fowardCheck:DOWN];
+        
+        //前方にある方から移動する
+        bool canBlock = YES;
+        for (int i=0; i<forwardMap.count; i++) {
+            Player* pl = [forwardMap objectAtIndex:i];
+            
+            if (![self move:pl :DOWN]) {
+                canBlock = NO;
+                break;
+            }
+        }
         
         //いずれかのブロックピースがSTAY状態になったら、もう片方のブロックピースを底面まで移動させる
-        if (!([self move:activeBlock :DOWN]&[self move:activeBlock2 :DOWN])){
+        if (canBlock == NO) {
             while (YES) {
                 if (![self move:activeBlock :DOWN]) {
                     break;

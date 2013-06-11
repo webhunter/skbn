@@ -13,14 +13,13 @@
     int direct;
     int grid_x;
     int grid_y;
-    bool move_state;
+    double radian;
 }
 
 @property (nonatomic)int direct_;
 @property (nonatomic)int grid_x_;
 @property (nonatomic)int grid_y_;
-@property (nonatomic)bool move_state_;
-
+@property (nonatomic)double radian_;
 
 +(id) initialize:(int)g_x :(int)g_y :(int)range;
 -(id) initObject:(int)g_x :(int)g_y :(int)range;

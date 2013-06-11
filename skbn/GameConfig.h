@@ -29,8 +29,8 @@
 #define MAP_WIDTH 11
 #define MAP_HEIGHT 13
 #define SIZE_TILE 22
-#define MAP_OFFSET_X 180
-#define MAP_OFFSET_Y 30
+//#define MAP_OFFSET_X 130
+//#define MAP_OFFSET_Y 30
 
 //フィールド上のオブジェクト
 #define EMPTY 0
@@ -41,7 +41,7 @@
 //ブロック定義
 #define BLOCK1_DEFAULT_X 2
 #define BLOCK1_DEFAULT_Y 1
-#define BLOCK2_DEFAULT_X 3
-#define BLOCK2_DEFAULT_Y 1
+#define BLOCK2_DEFAULT_X 2
+#define BLOCK2_DEFAULT_Y 0
 
 #endif // __GAME_CONFIG_H

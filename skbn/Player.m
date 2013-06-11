@@ -12,7 +12,7 @@
 
 @synthesize grid_x_ = grid_x;
 @synthesize grid_y_ = grid_y;
-@synthesize move_state_ = move_state;
+@synthesize radian_ = radian;
 @synthesize direct_ = direct;
 @synthesize velocity_=velocity;
 
@@ -36,9 +36,10 @@
         //速度初期化
         self.velocity_ = ccp(0,1);
         
-        //移動可能フラグ初期化
-        //NOの時は移動不可
-        move_state = YES;
+        //回転角初期化（PI/2）
+        radian = 0;
+//        radian = M_PI_2;
+//        NSLog(@"@@@回転角チェック【%lf】", cos(radian));
         
         //キャッシュを読み込み
 //        CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];

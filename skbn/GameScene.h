@@ -33,8 +33,8 @@ typedef enum
     RIGHT,
     DOWN,
     LEFT,
-    TURN_RIGHT,
-    TURN_LEFT,
+    ROT_LEFT,
+    ROT_RIGHT,
     NOP,
 } keyDirection;
 
@@ -44,6 +44,9 @@ typedef enum
     CCSprite* atlasImg;
     
     CCSpriteBatchNode* spriteBatch;
+    
+    int map_offset_x;
+    int map_offset_y;
     
     //操作UI
     //コントロールパネル
@@ -75,6 +78,8 @@ typedef enum
 +(CCScene *) scene;
 +(GameScene*) sharedGameScene;
 
+@property (nonatomic)int map_offset_x_;
+@property (nonatomic)int map_offset_y_;
 @property (nonatomic)int block_range_;
 @property (atomic,retain)Player* activeBlock_;
 @property (atomic,retain)Player* activeBlock2_;

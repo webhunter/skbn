@@ -82,7 +82,7 @@ static GameScene* instanceOfGameScene;
         [atlasImg initWithFile:@"atlas_1.png"];
         
         //操作UI描画
-        
+        //コントロールパネル
         //左
         btn_l = [CCMenuItemImage
                           itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
@@ -110,8 +110,14 @@ static GameScene* instanceOfGameScene;
                  target:self selector:@selector(controllerTapped:)];
         btn_u.position = ccp(screenSize.width/6+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
         
+        //Aボタン
+        btn_a = [CCMenuItemImage
+                 itemFromNormalImage:@"gls_red_up.png" selectedImage:@"gls_red_down.png"
+                 target:self selector:@selector(controllerTapped:)];
+        btn_a.position = ccp(screenSize.width/6*5+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
+        
         //メニューに追加
-        CCMenu *controlMenu = [CCMenu menuWithItems:btn_l,btn_d,btn_r,btn_u, nil];
+        CCMenu *controlMenu = [CCMenu menuWithItems:btn_l,btn_d,btn_r,btn_u,btn_a, nil];
         
         controlMenu.position = CGPointZero;
         [self addChild:controlMenu z:3 tag:ControlUITagGame];
@@ -236,13 +242,23 @@ static GameScene* instanceOfGameScene;
     else if (btn.hash == btn_r.hash) {   //右
         dir = RIGHT;
     }
+    else if (btn.hash == btn_a.hash) {   //左回転
+        dir = TURN_LEFT;
+    }
+    else if (btn.hash == btn_b.hash) {   //右回転
+        dir = TURN_RIGHT;
+    }
     
     //移動
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:0.7];
-    [self move:activeBlock: dir];
-    [self move:activeBlock2 :dir];
-    [CATransaction commit];
+    
+    //移動方向に対して前方にあるブロックユニットを取得する
+    NSMutableArray* moveMap = [self fowardCheck:dir];
+    
+    //前方にある方から移動する
+    for (int i=0; i<moveMap.count; i++) {
+        Player* pl = [moveMap objectAtIndex:i];
+        [self move:pl :dir];
+    }
 }
 
 //ブロック移動メソッド
@@ -253,29 +269,56 @@ static GameScene* instanceOfGameScene;
     return YES;
 }
 
-//プライマリとセカンダリで、進行方向に対して前方に存在するブロックパーツを返す
--(Player*)fowardCheck:(int)dir{
+//進行方向に対して前方に存在するブロックパーツを判別する
+-(NSMutableArray*)fowardCheck:(int)dir{
     
-    Player* fowardInstance = activeBlock;
+    NSMutableArray* moveSequenceMap = [NSMutableArray arrayWithCapacity:2];
     
     //移動先を調査
     if (dir == LEFT){   //左
-        if (activeBlock.grid_x_ < activeBlock2.grid_x_) {   //セカンダリが左にある時のみセカンダリ前方
-            fowardInstance = activeBlock2;
+        if (activeBlock.grid_x_ > activeBlock2.grid_x_) {   //プライマリが右（＝x軸座標が大きい）場合、セカンダリが前方
+            [moveSequenceMap addObject:activeBlock2];
+            [moveSequenceMap addObject:activeBlock];
+        }else
+        {
+            [moveSequenceMap addObject:activeBlock];
+            [moveSequenceMap addObject:activeBlock2];
         }
     }
     else if (dir == RIGHT){ //右
-    }
-    else if (dir == DOWN) {  //下
-        if (activeBlock.grid_y_ < activeBlock2.grid_y_) {   //セカンダリが下にある時のみセカンダリ前方
-            fowardInstance = activeBlock2;
+        if (activeBlock.grid_x_ < activeBlock2.grid_x_) {   //プライマリが左（＝x軸座標が小さい）場合、セカンダリが前方
+            [moveSequenceMap addObject:activeBlock2];
+            [moveSequenceMap addObject:activeBlock];
+        }else
+        {
+            [moveSequenceMap addObject:activeBlock];
+            [moveSequenceMap addObject:activeBlock2];
         }
     }
-    return fowardInstance;
+    else if (dir == DOWN) {  //下
+        if (activeBlock.grid_y_ < activeBlock2.grid_y_) {   //プライマリが上（＝y軸座標が小さい）場合、セカンダリが前方
+            [moveSequenceMap addObject:activeBlock2];
+            [moveSequenceMap addObject:activeBlock];
+        }else
+        {
+            [moveSequenceMap addObject:activeBlock];
+            [moveSequenceMap addObject:activeBlock2];
+        }
+    }
+    return moveSequenceMap;
 }
 
 //移動メソッド
 -(BOOL)move:(Player*)block :(int)dir{
+    
+    //ブロックが移動中の場合、処理を抜ける
+//    if (block.move_state_ == NO) {
+//        NSLog(@"@@@move block");
+//        return YES;
+//    }
+//    
+//    //移動可能フラグをブロックモードにする
+//    block.move_state_ = NO;
     
     //現在のグリッド座標の状態取得
     int nowIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
@@ -289,8 +332,8 @@ static GameScene* instanceOfGameScene;
     //座標更新のために現在のグリッド座標の状態をEMPTYに戻す
     [map replaceObjectAtIndex:nowIdx withObject:[NSString stringWithFormat:@"%02d",EMPTY]];
     
-    //移動継続フラグ
-    BOOL canmove = YES;
+    //移動継続フラグ(座標的に移動可能かどうかを判別するフラグ)
+    BOOL wall_check = YES;
     
     int next_grid_x = block.grid_x_;
     int next_grid_y = block.grid_y_;
@@ -322,7 +365,7 @@ static GameScene* instanceOfGameScene;
         else{
             //移動できなくなった場合、ブロックの状態をSTAYにする
             setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
-            canmove = NO;
+            wall_check = NO;
         }
     }
     
@@ -333,7 +376,10 @@ static GameScene* instanceOfGameScene;
     //ブロックピースの移動
     block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
     
-    return canmove;
+    //移動が終了したのでブロックモード解除
+//    block.move_state_ = YES;
+    
+    return wall_check;
 }
 
 //指定したグリッド座標の状態を取得する

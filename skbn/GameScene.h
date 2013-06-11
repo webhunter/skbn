@@ -33,6 +33,8 @@ typedef enum
     RIGHT,
     DOWN,
     LEFT,
+    TURN_RIGHT,
+    TURN_LEFT,
     NOP,
 } keyDirection;
 
@@ -43,10 +45,16 @@ typedef enum
     
     CCSpriteBatchNode* spriteBatch;
     
+    //操作UI
+    //コントロールパネル
     CCMenuItemImage* btn_u;
     CCMenuItemImage* btn_r;
     CCMenuItemImage* btn_d;
     CCMenuItemImage* btn_l;
+    
+    //回転ボタン
+    CCMenuItemImage* btn_a;
+    CCMenuItemImage* btn_b;
     
     CCSpriteBatchNode* wallList;  //壁
     NSMutableArray* map;   //描画マップ

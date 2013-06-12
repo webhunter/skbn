@@ -93,7 +93,7 @@ static GameScene* instanceOfGameScene;
         btn_l = [CCMenuItemImage
                           itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                                   target:self selector:@selector(controllerTapped:)];
-        btn_l.position = ccp(screenSize.width/9, screenSize.height/4);
+        btn_l.position = ccp(screenSize.width/9, screenSize.height/2);
         
         float btnSizeWidth = btn_l.contentSize.width;
         float btnSizeHeight = btn_l.contentSize.height;
@@ -102,31 +102,31 @@ static GameScene* instanceOfGameScene;
         btn_d = [CCMenuItemImage
                  itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                  target:self selector:@selector(controllerTapped:)];
-        btn_d.position = ccp(screenSize.width/9+btnSizeWidth/2, screenSize.height/4-btnSizeHeight);
+        btn_d.position = ccp(screenSize.width/9+btnSizeWidth/2, screenSize.height/2-btnSizeHeight);
         
         //右
         btn_r = [CCMenuItemImage
                                   itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                                   target:self selector:@selector(controllerTapped:)];
-        btn_r.position = ccp(screenSize.width/9+btnSizeWidth, screenSize.height/4);
+        btn_r.position = ccp(screenSize.width/9+btnSizeWidth, screenSize.height/2);
         
         //上
         btn_u = [CCMenuItemImage
                  itemFromNormalImage:@"gls_blue_up.png" selectedImage:@"gls_blue_down.png"
                  target:self selector:@selector(controllerTapped:)];
-        btn_u.position = ccp(screenSize.width/9+btnSizeWidth/2, screenSize.height/4+btnSizeHeight);
+        btn_u.position = ccp(screenSize.width/9+btnSizeWidth/2, screenSize.height/2+btnSizeHeight);
         
         //Aボタン
         btn_a = [CCMenuItemImage
                  itemFromNormalImage:@"gls_red_up.png" selectedImage:@"gls_red_down.png"
                  target:self selector:@selector(controllerTapped_rotation:)];
-        btn_a.position = ccp(screenSize.width/9*7+btnSizeWidth/2, screenSize.height/4);
+        btn_a.position = ccp(screenSize.width/9*7+btnSizeWidth/4, screenSize.height/2);
         
         //Bボタン
         btn_b = [CCMenuItemImage
                  itemFromNormalImage:@"gls_green_up.png" selectedImage:@"gls_green_down.png"
                  target:self selector:@selector(controllerTapped_rotation:)];
-        btn_b.position = ccp(screenSize.width/9*7+btnSizeWidth/2*3, screenSize.height/4);
+        btn_b.position = ccp(screenSize.width/9*7+btnSizeWidth/4*5, screenSize.height/2);
         
         //メニューに追加
         CCMenu *controlMenu = [CCMenu menuWithItems:btn_l,btn_d,btn_r,btn_u,btn_a,btn_b, nil];
@@ -344,10 +344,10 @@ static GameScene* instanceOfGameScene;
     NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_ACTIVE];
     
     if (dir == ROT_LEFT){   //左回転
-        next_radian = M_PI_2;
+        next_radian = -M_PI_2;
     }
     else if (dir == ROT_RIGHT){ //右回転
-        next_radian = -M_PI_2;
+        next_radian = M_PI_2;
     }
     
     //移動先を調査して、移動可能な場合、回転する
@@ -405,7 +405,7 @@ static GameScene* instanceOfGameScene;
     return coordinate;
 }
 
-//移動メソッド
+//@@@移動メソッド
 -(BOOL)move:(Player*)block :(int)dir{
         
     //現在のグリッド座標の状態取得
@@ -494,6 +494,29 @@ static GameScene* instanceOfGameScene;
     return round(lifeTime*span);
 }
 
+//ブロックの固定処理（片方のブロックユニットが固定された場合に呼び出し）
+-(BOOL)fixBlock
+{
+    while (YES) {
+        if (![self move:activeBlock :DOWN]) {
+            break;
+        }
+    }
+    while (YES) {
+        if (![self move:activeBlock2 :DOWN]) {
+            break;
+        }
+    }
+    return YES;
+}
+
+//ブロックの消去
+
+//連結領域のカウント
+-(void)Count:(int)grid_x :(int)grid_y :(NSInteger)n
+{
+}
+
 -(void) update:(ccTime)delta
 {
     //累計時間に差分時間を足す
@@ -522,16 +545,11 @@ static GameScene* instanceOfGameScene;
         
         //いずれかのブロックピースがSTAY状態になったら、もう片方のブロックピースを底面まで移動させる
         if (canBlock == NO) {
-            while (YES) {
-                if (![self move:activeBlock :DOWN]) {
-                    break;
-                }
-            }
-            while (YES) {
-                if (![self move:activeBlock2 :DOWN]) {
-                    break;
-                }
-            }
+            [self fixBlock];
+            
+            //ブロックの移動が終わったら、連結領域の判定・ブロックの消去
+            
+            
             
             //新しいブロック生成
             activeBlock = [self createBlock:self.block_range_ :1];

@@ -14,7 +14,7 @@
 @synthesize grid_y_ = grid_y;
 @synthesize radian_ = radian;
 @synthesize direct_ = direct;
-@synthesize velocity_=velocity;
+@synthesize velocity_ = velocity;
 
 +(id) initialize:(int)g_x :(int)g_y :(int)range
 {
@@ -38,8 +38,6 @@
         
         //回転角初期化（PI/2）
         radian = 0;
-//        radian = M_PI_2;
-//        NSLog(@"@@@回転角チェック【%lf】", cos(radian));
         
         //キャッシュを読み込み
 //        CCSpriteFrameCache* frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];

@@ -13,12 +13,14 @@
 		404D92BB175755A20031B851 /* joystick-stick.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D92B9175755A10031B851 /* joystick-stick.png */; };
 		404D92BC175755A20031B851 /* joystick-sheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 404D92BA175755A10031B851 /* joystick-sheet.png */; };
 		404D942817575FDA0031B851 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E0175119FD00C4A3C7 /* QuartzCore.framework */; };
+		40522450176764AF00AA5919 /* gls_green_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 4052244F176764AF00AA5919 /* gls_green_down.png */; };
 		40AADF4F1755AB06006F8AD6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */; };
+		40F916D01766C805007D7113 /* gls_red_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 40F916CF1766C805007D7113 /* gls_red_down.png */; };
 		D925E738175C1C9B00EFB337 /* bkimg_01.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E733175C1C9B00EFB337 /* bkimg_01.png */; };
 		D925E739175C1C9B00EFB337 /* gls_blue_down.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E734175C1C9B00EFB337 /* gls_blue_down.png */; };
 		D925E73A175C1C9B00EFB337 /* gls_blue_up.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E735175C1C9B00EFB337 /* gls_blue_up.png */; };
-		D925E73B175C1C9B00EFB337 /* gls_green.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E736175C1C9B00EFB337 /* gls_green.png */; };
-		D925E73C175C1C9B00EFB337 /* gls_red.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E737175C1C9B00EFB337 /* gls_red.png */; };
+		D925E73B175C1C9B00EFB337 /* gls_green_up.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E736175C1C9B00EFB337 /* gls_green_up.png */; };
+		D925E73C175C1C9B00EFB337 /* gls_red_up.png in Resources */ = {isa = PBXBuildFile; fileRef = D925E737175C1C9B00EFB337 /* gls_red_up.png */; };
 		D97199E3175119FD00C4A3C7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E2175119FD00C4A3C7 /* OpenGLES.framework */; };
 		D97199E5175119FD00C4A3C7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E4175119FD00C4A3C7 /* OpenAL.framework */; };
 		D97199E7175119FD00C4A3C7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97199E6175119FD00C4A3C7 /* AudioToolbox.framework */; };
@@ -159,12 +161,14 @@
 		404D929F17573D400031B851 /* RollingStone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RollingStone.png; sourceTree = "<group>"; };
 		404D92B9175755A10031B851 /* joystick-stick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-stick.png"; sourceTree = "<group>"; };
 		404D92BA175755A10031B851 /* joystick-sheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-sheet.png"; sourceTree = "<group>"; };
+		4052244F176764AF00AA5919 /* gls_green_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_green_down.png; sourceTree = "<group>"; };
 		40AADF4E1755AB06006F8AD6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		40F916CF1766C805007D7113 /* gls_red_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_red_down.png; sourceTree = "<group>"; };
 		D925E733175C1C9B00EFB337 /* bkimg_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bkimg_01.png; sourceTree = "<group>"; };
 		D925E734175C1C9B00EFB337 /* gls_blue_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_blue_down.png; sourceTree = "<group>"; };
 		D925E735175C1C9B00EFB337 /* gls_blue_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_blue_up.png; sourceTree = "<group>"; };
-		D925E736175C1C9B00EFB337 /* gls_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_green.png; sourceTree = "<group>"; };
-		D925E737175C1C9B00EFB337 /* gls_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_red.png; sourceTree = "<group>"; };
+		D925E736175C1C9B00EFB337 /* gls_green_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_green_up.png; sourceTree = "<group>"; };
+		D925E737175C1C9B00EFB337 /* gls_red_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gls_red_up.png; sourceTree = "<group>"; };
 		D97199DD175119FD00C4A3C7 /* skbn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skbn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97199E0175119FD00C4A3C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D97199E2175119FD00C4A3C7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -523,8 +527,10 @@
 				D925E733175C1C9B00EFB337 /* bkimg_01.png */,
 				D925E734175C1C9B00EFB337 /* gls_blue_down.png */,
 				D925E735175C1C9B00EFB337 /* gls_blue_up.png */,
-				D925E736175C1C9B00EFB337 /* gls_green.png */,
-				D925E737175C1C9B00EFB337 /* gls_red.png */,
+				4052244F176764AF00AA5919 /* gls_green_down.png */,
+				D925E736175C1C9B00EFB337 /* gls_green_up.png */,
+				40F916CF1766C805007D7113 /* gls_red_down.png */,
+				D925E737175C1C9B00EFB337 /* gls_red_up.png */,
 				40077CE117589DF200581F88 /* map_1.txt */,
 				404D92B9175755A10031B851 /* joystick-stick.png */,
 				404D92BA175755A10031B851 /* joystick-sheet.png */,
@@ -970,8 +976,10 @@
 				D925E738175C1C9B00EFB337 /* bkimg_01.png in Resources */,
 				D925E739175C1C9B00EFB337 /* gls_blue_down.png in Resources */,
 				D925E73A175C1C9B00EFB337 /* gls_blue_up.png in Resources */,
-				D925E73B175C1C9B00EFB337 /* gls_green.png in Resources */,
-				D925E73C175C1C9B00EFB337 /* gls_red.png in Resources */,
+				D925E73B175C1C9B00EFB337 /* gls_green_up.png in Resources */,
+				D925E73C175C1C9B00EFB337 /* gls_red_up.png in Resources */,
+				40F916D01766C805007D7113 /* gls_red_down.png in Resources */,
+				40522450176764AF00AA5919 /* gls_green_down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

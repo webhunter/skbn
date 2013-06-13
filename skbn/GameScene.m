@@ -18,6 +18,7 @@
 //#import "SneakyButtonSkinnedBase.h"
 //#import "ColoredCircleSprite.h"
 #import "Wall.h"
+#import "BlockStateObject.h"
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
@@ -210,7 +211,7 @@ static GameScene* instanceOfGameScene;
 //座標変換(grid->map)
 -(int)convertGridToMap:(int)grid_x :(int)grid_y
 {
-    return MAP_WIDTH * grid_y + grid_x;   //i回分WIDTHが回った
+    return MAP_WIDTH * grid_y + grid_x;   //grid_y回分WIDTHが回った
 }
 
 //座標変換(grid->ccp)
@@ -361,7 +362,6 @@ static GameScene* instanceOfGameScene;
     if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
         block.grid_x_ = next_grid_x;
         block.grid_y_ = next_grid_y;
-        block.radian_ = next_radian;
     }
     
     //グリッド座標を更新する
@@ -383,17 +383,21 @@ static GameScene* instanceOfGameScene;
     double elem_1 = cos(radian);
     double elem_2 = sin(radian);
     
+    //doubleのまま計算すると、-0.0で計算され、結果不正となる
+    NSNumber* elem_n_1 = [[NSNumber alloc] initWithDouble:elem_1];
+    NSNumber* elem_n_2 = [[NSNumber alloc] initWithDouble:elem_2];
+    
 //    NSLog(@"@@@grid_x:【%d】", grid_x);
 //    NSLog(@"@@@grid_y:【%d】", grid_y);
 //    
 //    NSLog(@"@@@center_x:【%d】", center_x);
 //    NSLog(@"@@@center_y:【%d】", center_y);
     
-    int rotate_grid_x = elem_1 * (grid_x-center_x) - elem_2 * (grid_y-center_y) + center_x;
-    int rotate_grid_y = elem_2 * (grid_x-center_x) + elem_1 * (grid_y-center_y) + center_y;
+    int rotate_grid_x = [elem_n_1 intValue] * (grid_x-center_x) - [elem_n_2 intValue] * (grid_y-center_y) + center_x;
+    int rotate_grid_y = [elem_n_2 intValue] * (grid_x-center_x) + [elem_n_1 intValue] * (grid_y-center_y) + center_y;
     
-//    NSLog(@"@@@rotate_grid_x:【%d】", rotate_grid_x);
-//    NSLog(@"@@@rotate_grid_y:【%d】", rotate_grid_y);
+    NSLog(@"@@@rotate_grid_x:【%d】", rotate_grid_x);
+    NSLog(@"@@@rotate_grid_y:【%d】", rotate_grid_y);
     
     NSNumber *x = [[NSNumber alloc] initWithInt:rotate_grid_x];
     NSNumber *y = [[NSNumber alloc] initWithInt:rotate_grid_y];
@@ -513,8 +517,16 @@ static GameScene* instanceOfGameScene;
 //ブロックの消去
 
 //連結領域のカウント
--(void)Count:(int)grid_x :(int)grid_y :(NSInteger)n
+-(void)Count:(Player*)pl :(NSInteger)n
 {
+    //色取得
+    int check_color = pl.color_;
+    
+    //上
+    
+    //下
+    //右
+    //左
 }
 
 -(void) update:(ccTime)delta
@@ -548,8 +560,6 @@ static GameScene* instanceOfGameScene;
             [self fixBlock];
             
             //ブロックの移動が終わったら、連結領域の判定・ブロックの消去
-            
-            
             
             //新しいブロック生成
             activeBlock = [self createBlock:self.block_range_ :1];
@@ -586,6 +596,16 @@ static GameScene* instanceOfGameScene;
     // 改行を消して、カンマごとにファイルの内容を分割する
     file_data = [file_data stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     map_tmp = [file_data componentsSeparatedByString:@","];
+    
+    //NSMutableArrayにコピーする
+//    NSMutableArray* stateMap = [[NSMutableArray alloc] initWithCapacity:map_tmp.count];
+//    for (int i=0; i<map_tmp.count; i++) {
+//        BlockStateObject *bl = [BlockStateObject initialize];
+//        bl.state_ = [map_tmp objectAtIndex:i];
+//        bl.pl_ptr_ = NULL;
+//        [stateMap addObject:bl];
+//    }
+//    return stateMap;
     
     //Array->MutableArray copy
     return [map_tmp mutableCopy];

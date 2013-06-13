@@ -13,6 +13,7 @@
 @synthesize grid_x_ = grid_x;
 @synthesize grid_y_ = grid_y;
 @synthesize radian_ = radian;
+@synthesize color_ = color;
 @synthesize direct_ = direct;
 @synthesize velocity_ = velocity;
 
@@ -24,8 +25,8 @@
 -(id) initObject:(int)g_x :(int)g_y :(int)range
 {
     //rangeの範囲で乱数を振り出し、画像をセットする
-    int color_rand = rand()%range+1;
-    NSString* file = [NSString stringWithFormat:@"img_%02d.png",color_rand];
+    color = rand()%range+1;
+    NSString* file = [NSString stringWithFormat:@"img_%02d.png",color];
     
     if ((self = [super initWithSpriteFrameName:file]))
 	{

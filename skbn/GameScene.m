@@ -197,13 +197,13 @@ static GameScene* instanceOfGameScene;
     
     Player* block = [Player initialize:grid_x :grid_y :range];
     
+    //実座標更新
+    block.position = [self convertGridToCcp:grid_x :grid_y];
+    
     //グリッド座標更新
     NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_ACTIVE];
     int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
     [map replaceObjectAtIndex:replaceIdx withObject:setValue];
-    
-    //実座標更新
-    block.position = [self convertGridToCcp:grid_x :grid_y];
     
     return block;
 }
@@ -364,12 +364,12 @@ static GameScene* instanceOfGameScene;
         block.grid_y_ = next_grid_y;
     }
     
+    //ブロックピースの移動
+    block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
+    
     //グリッド座標を更新する
     int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
     [map replaceObjectAtIndex:replaceIdx withObject:setValue];
-    
-    //ブロックピースの移動
-    block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
     
     return wall_check;
 }
@@ -454,20 +454,24 @@ static GameScene* instanceOfGameScene;
         if ([self isEmptyBlock:next_grid_x :next_grid_y]) {
             block.grid_y_ = next_grid_y;
         }
-        else{
-            //移動できなくなった場合、ブロックの状態をSTAYにする
-            setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
-            wall_check = NO;
-        }
+    }
+    
+    //ブロックピースの移動
+    block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
+    
+    //移動後に一歩先を見て、移動できない場合、ブロックの状態をSTAYにする
+    next_grid_x = block.grid_x_;
+    next_grid_y = block.grid_y_;
+    next_grid_y += 1;
+    if (![self isEmptyBlock:next_grid_x :next_grid_y] && ![self isActiveBlock:next_grid_x :next_grid_y]){ //空白でない、かつ、アクティブブロックでない
+        setValue = [NSString stringWithFormat:@"%02d",BLOCK_STAY];
+        wall_check = NO;
     }
     
     //グリッド座標を更新する
     int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
     [map replaceObjectAtIndex:replaceIdx withObject:setValue];
     
-    //ブロックピースの移動
-    block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
-        
     return wall_check;
 }
 
@@ -485,6 +489,19 @@ static GameScene* instanceOfGameScene;
     int checkPoint_i= [self getGridState:grid_x :grid_y];
     
     if (checkPoint_i == EMPTY) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
+//指定した座標がBLOCK_ACTIVEかどうかを調べる
+-(BOOL)isActiveBlock:(int)grid_x :(int)grid_y
+{
+    int checkPoint_i= [self getGridState:grid_x :grid_y];
+    
+    if (checkPoint_i == BLOCK_ACTIVE) {
         return YES;
     }
     else {
@@ -525,7 +542,9 @@ static GameScene* instanceOfGameScene;
     //上
     
     //下
+    
     //右
+    
     //左
 }
 

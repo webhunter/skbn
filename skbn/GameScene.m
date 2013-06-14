@@ -18,7 +18,8 @@
 //#import "SneakyButtonSkinnedBase.h"
 //#import "ColoredCircleSprite.h"
 #import "Wall.h"
-#import "BlockStateObject.h"
+//#import "BlockStateObject.h"
+//#import "FieldUnit.h"
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
@@ -35,6 +36,7 @@
 @synthesize map_ = map;
 @synthesize map_offset_x_ = map_offset_x;
 @synthesize map_offset_y_ = map_offset_y;
+//@synthesize tile_ = tile[MAP_HEIGHT][];
 
 static GameScene* instanceOfGameScene;
 +(GameScene*) sharedGameScene
@@ -143,22 +145,25 @@ static GameScene* instanceOfGameScene;
         wallList = [CCSpriteBatchNode batchNodeWithFile:@"atlas_1.png"];
         [self addChild:wallList z:0 tag:WallTag];
         
-        NSString* point;
+        int point;
         for (int i=0; i<MAP_HEIGHT; i++){
             for (int j=0; j<MAP_WIDTH; j++){
                 //マップから該当する座標のオブジェクト種類を取得する
+//                BlockStateObject* bl = [map objectAtIndex:[self convertGridToMap:j :i]];
                 point = [map objectAtIndex:[self convertGridToMap:j :i]];
                 
                 //数値に変換
-                int point_coord = [point intValue];
+//                int point_coord = [point intValue];
                 
-                if (point_coord == EMPTY) {   //何もない空間はエスケープ
+                if (point == EMPTY) {   //何もない空間はエスケープ
+//                if (point_coord == EMPTY) {   //何もない空間はエスケープ
                     continue;
                 }
 //                else if(point_coord>0 && point_coord<20){   //未来使用
 //                    NSString* file = [NSString stringWithFormat:@"img_%02d.png",point_coord];
 //                }
-                else if (point_coord == WALL){  //壁
+                else if (point == WALL){  //壁
+//                    else if (point_coord == WALL){  //壁
                     CCSpriteFrame* frm = [frameCache spriteFrameByName:@"img_20.png"];
                     
                     Wall* wall = [Wall initialize:frm];
@@ -171,18 +176,18 @@ static GameScene* instanceOfGameScene;
                 
         //ブロック生成
         activeBlock = [self createBlock:block_range :1];
-        [self addChild:activeBlock z:0 tag:BlockTag];
+//        [self addChild:activeBlock z:0 tag:BlockTag];
         
         activeBlock2 = [self createBlock:block_range :2];
-        [self addChild:activeBlock2 z:0 tag:BlockTag];
+//        [self addChild:activeBlock2 z:0 tag:BlockTag];
 
-        [self scheduleUpdate];
+//        [self scheduleUpdate];
 	}
 	return self;
 }
 
 //ブロック生成処理
--(Player*)createBlock:(int)range :(int)rank
+-(BlockStateObject*)createBlock:(int)range :(int)rank
 {
     int grid_x,grid_y=0;
     
@@ -199,13 +204,44 @@ static GameScene* instanceOfGameScene;
     
     //実座標更新
     block.position = [self convertGridToCcp:grid_x :grid_y];
+    [self addChild:block z:0 tag:BlockTag];
     
     //グリッド座標更新
-    NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_ACTIVE];
-    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
-    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
+    int placeIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+    return [self updateMap:placeIdx :block];
     
-    return block;
+//    NSString* setValue = [NSString stringWithFormat:@"%02d",BLOCK_ACTIVE];
+//    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+//    BlockStateObject* bl = [map objectAtIndex:replaceIdx];
+//    bl.pl_ptr_ = block;
+//    bl.state_ = BLOCK_ACTIVE;
+//    [map replaceObjectAtIndex:replaceIdx withObject:bl];
+    
+//    return block;
+}
+
+//Gridマップ更新
+- (BlockStateObject*)updateMap:(int)old_Idx :(Player*)block
+{
+    //現在の座標をクリア
+    BlockStateObject* blso_old = [BlockStateObject initialize];
+//    BlockStateObject* blso_old = [map objectAtIndex:old_Idx];
+    blso_old.pl_ptr_ = NULL;
+    blso_old.state_ = EMPTY;
+    [map removeObjectAtIndex:old_Idx];
+    [map insertObject:blso_old atIndex:old_Idx];
+    
+    //更新
+    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+    BlockStateObject* blso = [map objectAtIndex:replaceIdx];
+    blso.pl_ptr_ = block;
+    blso.state_ = BLOCK_ACTIVE;
+    [map removeObjectAtIndex:replaceIdx];
+    [map insertObject:blso atIndex:replaceIdx];
+//    [map replaceObjectAtIndex:replaceIdx withObject:blso];
+    
+    NSLog(@"count:【%d】",map.count);
+    return blso;
 }
 
 //座標変換(grid->map)
@@ -280,7 +316,10 @@ static GameScene* instanceOfGameScene;
     }
     
     //セカンダリブロックユニットを回転させる
-    [self rotation:activeBlock2 :dir :activeBlock.grid_x_ :activeBlock.grid_y_];
+//    if ([activeBlock2.pl_ptr_ isKindOfClass:[Player class]]) {
+//        [self rotation:activeBlock2.pl_ptr_ :dir :activeBlock.pl_ptr_.grid_x_ :activeBlock.pl_ptr_.grid_y_];
+//    }
+    [self rotation:activeBlock2.pl_ptr_ :dir :activeBlock.pl_ptr_.grid_x_ :activeBlock.pl_ptr_.grid_y_];
 }
 
 //進行方向に対して前方に存在するブロックパーツを判別する
@@ -290,7 +329,7 @@ static GameScene* instanceOfGameScene;
     
     //移動先を調査
     if (dir == LEFT){   //左
-        if (activeBlock.grid_x_ > activeBlock2.grid_x_) {   //プライマリが右（＝x軸座標が大きい）場合、セカンダリが前方
+        if (activeBlock.pl_ptr_.grid_x_ > activeBlock2.pl_ptr_.grid_x_) {   //プライマリが右（＝x軸座標が大きい）場合、セカンダリが前方
             [moveSequenceMap addObject:activeBlock2];
             [moveSequenceMap addObject:activeBlock];
         }else
@@ -300,7 +339,7 @@ static GameScene* instanceOfGameScene;
         }
     }
     else if (dir == RIGHT){ //右
-        if (activeBlock.grid_x_ < activeBlock2.grid_x_) {   //プライマリが左（＝x軸座標が小さい）場合、セカンダリが前方
+        if (activeBlock.pl_ptr_.grid_x_ < activeBlock2.pl_ptr_.grid_x_) {   //プライマリが左（＝x軸座標が小さい）場合、セカンダリが前方
             [moveSequenceMap addObject:activeBlock2];
             [moveSequenceMap addObject:activeBlock];
         }else
@@ -310,7 +349,7 @@ static GameScene* instanceOfGameScene;
         }
     }
     else if (dir == DOWN) {  //下
-        if (activeBlock.grid_y_ < activeBlock2.grid_y_) {   //プライマリが上（＝y軸座標が小さい）場合、セカンダリが前方
+        if (activeBlock.pl_ptr_.grid_y_ < activeBlock2.pl_ptr_.grid_y_) {   //プライマリが上（＝y軸座標が小さい）場合、セカンダリが前方
             [moveSequenceMap addObject:activeBlock2];
             [moveSequenceMap addObject:activeBlock];
         }else
@@ -368,8 +407,10 @@ static GameScene* instanceOfGameScene;
     block.position = [self convertGridToCcp:block.grid_x_ :block.grid_y_];
     
     //グリッド座標を更新する
-    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
-    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
+    [self updateMap:nowIdx :block];
+    
+//    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+//    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
     
     return wall_check;
 }
@@ -469,8 +510,9 @@ static GameScene* instanceOfGameScene;
     }
     
     //グリッド座標を更新する
-    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
-    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
+    [self updateMap:nowIdx :block];
+//    int replaceIdx = [self convertGridToMap:block.grid_x_ :block.grid_y_];
+//    [map replaceObjectAtIndex:replaceIdx withObject:setValue];
     
     return wall_check;
 }
@@ -478,9 +520,13 @@ static GameScene* instanceOfGameScene;
 //指定したグリッド座標の状態を取得する
 -(int)getGridState:(int)grid_x :(int)grid_y
 {
-    int checkIdx = [self convertGridToMap:grid_x :grid_y];
-    NSString* checkPoint = [map objectAtIndex:checkIdx];
-    return [checkPoint intValue];
+    int replaceIdx = [self convertGridToMap:grid_x :grid_y];
+    BlockStateObject* blso = [map objectAtIndex:replaceIdx];
+    return blso.state_;
+    
+//    int checkIdx = [self convertGridToMap:grid_x :grid_y];
+//    NSString* checkPoint = [map objectAtIndex:checkIdx];
+//    return [checkPoint intValue];
 }
 
 //指定した座標がEMPTYかどうかを調べる
@@ -519,12 +565,12 @@ static GameScene* instanceOfGameScene;
 -(BOOL)fixBlock
 {
     while (YES) {
-        if (![self move:activeBlock :DOWN]) {
+        if (![self move:activeBlock.pl_ptr_ :DOWN]) {
             break;
         }
     }
     while (YES) {
-        if (![self move:activeBlock2 :DOWN]) {
+        if (![self move:activeBlock2.pl_ptr_ :DOWN]) {
             break;
         }
     }
@@ -537,7 +583,7 @@ static GameScene* instanceOfGameScene;
 -(void)Count:(Player*)pl :(NSInteger)n
 {
     //色取得
-    int check_color = pl.color_;
+//    int check_color = pl.color_;
     
     //上
     
@@ -582,10 +628,10 @@ static GameScene* instanceOfGameScene;
             
             //新しいブロック生成
             activeBlock = [self createBlock:self.block_range_ :1];
-            [self addChild:activeBlock z:0 tag:BlockTag];
+//            [self addChild:activeBlock z:0 tag:BlockTag];
             
             activeBlock2 = [self createBlock:self.block_range_ :2];
-            [self addChild:activeBlock2 z:0 tag:BlockTag];
+//            [self addChild:activeBlock2 z:0 tag:BlockTag];
         }
         
         //規定時間置きに早くなる
@@ -617,17 +663,23 @@ static GameScene* instanceOfGameScene;
     map_tmp = [file_data componentsSeparatedByString:@","];
     
     //NSMutableArrayにコピーする
+    NSMutableArray* stateMap = [[NSMutableArray alloc] initWithCapacity:map_tmp.count];
+    for (int i=0; i<map_tmp.count; i++) {
+        [stateMap addObject:[[map_tmp objectAtIndex:i] intValue]];
+    }
 //    NSMutableArray* stateMap = [[NSMutableArray alloc] initWithCapacity:map_tmp.count];
 //    for (int i=0; i<map_tmp.count; i++) {
 //        BlockStateObject *bl = [BlockStateObject initialize];
-//        bl.state_ = [map_tmp objectAtIndex:i];
+//        bl.state_ = [[map_tmp objectAtIndex:i] intValue];  //string->intに変換
 //        bl.pl_ptr_ = NULL;
 //        [stateMap addObject:bl];
 //    }
-//    return stateMap;
+    
+    NSLog(@"item count:%d",map_tmp.count);
+    return stateMap;
     
     //Array->MutableArray copy
-    return [map_tmp mutableCopy];
+//    return [map_tmp mutableCopy];
 }
 
 // on "dealloc" you need to release all your retained objects

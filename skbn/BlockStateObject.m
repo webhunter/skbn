@@ -27,4 +27,11 @@
     return self;
 }
 
+-(void) dealloc
+{
+    // don't forget to call "super dealloc"
+    self.pl_ptr_ = NULL;
+	[super dealloc];
+}
+
 @end

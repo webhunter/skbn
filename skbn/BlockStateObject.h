@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "Player.h"
+//#import "FieldUnit.h"
 
 @interface BlockStateObject : NSObject{
     int state;
     Player* pl_ptr;
 }
 
-@property (nonatomic)int state_;
-@property (nonatomic,retain)Player* pl_ptr_;
+@property (readwrite)int state_;
+@property (readwrite,retain)Player* pl_ptr_;
 
 +(id) initialize;
 -(id) initObject;

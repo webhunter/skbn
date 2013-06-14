@@ -15,6 +15,7 @@
 
 #import "GameConfig.h"
 #import "Player.h"
+#import "BlockStateObject.h"
 
 typedef enum
 {
@@ -63,8 +64,12 @@ typedef enum
     NSMutableArray* map;   //描画マップ
     
     //現在操作中のブロックを指すポインタ
-    Player* activeBlock;
-    Player* activeBlock2;
+    BlockStateObject* activeBlock;
+    BlockStateObject* activeBlock2;
+//    Player* activeBlock;
+//    Player* activeBlock2;
+    
+    CCSprite* tile[MAP_HEIGHT][MAP_WIDTH];
     
     int displayTime;
     ccTime lifeTime;
@@ -81,9 +86,10 @@ typedef enum
 @property (nonatomic)int map_offset_x_;
 @property (nonatomic)int map_offset_y_;
 @property (nonatomic)int block_range_;
-@property (atomic,retain)Player* activeBlock_;
-@property (atomic,retain)Player* activeBlock2_;
+@property (atomic,retain)BlockStateObject* activeBlock_;
+@property (atomic,retain)BlockStateObject* activeBlock2_;
 @property (atomic,retain)CCSpriteBatchNode* wallList_;
 @property (atomic,retain)NSMutableArray* map_;
+@property (atomic,retain)CCSprite* tile_;
 
 @end

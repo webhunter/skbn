@@ -10,26 +10,19 @@
 
 @implementation FieldUnit
 
-//@synthesize gridCoodinate_ = gridCoodinate;
-//@synthesize direct_ = direct;
-//
-//+(id) initialize:(CCSpriteFrame*)frm :(CGPoint)cood :(int)dir
-//{
-//    self = [[self alloc] initObject:frm :cood :dir];
-//    
-//    return [self autorelease];
-//}
-//
-//-(id) initObject:(CCSpriteFrame*)frm :(CGPoint)cood :(int)dir
-//{
-//    self = [CCSprite spriteWithSpriteFrame:frm];
-//    
-//    //座標初期化
-//    gridCoodinate = CGPointMake(cood.x, cood.y);
-//    
-//    direct = dir;
-//    
-//    return self;
-//}
++(id) initialize
+{
+    return [[[self alloc] initObject] autorelease];
+}
+
+-(id) initObject
+{
+}
+
+-(void) dealloc
+{
+    // don't forget to call "super dealloc"
+	[super dealloc];
+}
 
 @end
